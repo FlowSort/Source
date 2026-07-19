@@ -1,0 +1,8 @@
+node_modules
+dist
+.env
+coverage
+*.log
+apps/desktop/release
+apps/mobile/android/.gradle
+apps/mobile/android/app/build

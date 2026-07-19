@@ -1,0 +1,3 @@
+import type { NextFunction,Request,Response } from "express";import { verificarAccess } from "../services/tokens.js";
+export function autenticar(req:Request,res:Response,next:NextFunction){const [tipo,token]=req.headers.authorization?.split(" ")??[];if(tipo!=="Bearer"||!token)return res.status(401).json({error:"No autenticado"});try{req.auth=verificarAccess(token);next()}catch{return res.status(401).json({error:"Token inválido o vencido"})}}
+export function soloAdmin(req:Request,res:Response,next:NextFunction){if(req.auth?.rol!=="ADMIN_EMPRESA")return res.status(403).json({error:"Requiere ADMIN_EMPRESA"});next()}

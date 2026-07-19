@@ -1,0 +1,4 @@
+import type { ErrorRequestHandler } from "express";import { ZodError } from "zod";
+function codigoPrisma(error:unknown):string|undefined{return typeof error==="object"&&error!==null&&"code" in error&&typeof error.code==="string"?error.code:undefined;}
+function mensajeSeguro(error:unknown){const mensaje=error instanceof Error?error.message:"Error interno";return mensaje.replace(/postgres(?:ql)?:\/\/[^\s]+/gi,"postgresql://[REDACTADO]");}
+export const manejarErrores:ErrorRequestHandler=(error,_req,res,_next)=>{if(error instanceof ZodError)return res.status(400).json({error:"Payload inválido",detalles:error.flatten()});if(codigoPrisma(error)==="P2002")return res.status(409).json({error:"Valor duplicado"});console.error(mensajeSeguro(error));return res.status(500).json({error:"Error interno"});};

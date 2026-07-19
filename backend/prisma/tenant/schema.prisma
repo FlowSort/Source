@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/generated/tenant"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("MANAGED_DATABASE_URL")
+}
+model Plantilla {
+  id String @id @default(uuid())
+  nombre String @unique
+  descripcion String?
+  esDefault Boolean @default(false)
+  campos Json
+  registros Registro[]
+}
+model Registro {
+  id String @id @default(uuid())
+  nombreCliente String
+  contacto String?
+  plantillaId String
+  plantilla Plantilla @relation(fields:[plantillaId],references:[id])
+  especificaciones Json
+  prioridad Prioridad @default(PREDETERMINADA)
+  estado EstadoRegistro @default(PENDIENTE)
+  usuarioId String
+  fechaRegistro DateTime @default(now())
+  fechaActualizacion DateTime @updatedAt
+  @@index([prioridad])
+  @@index([fechaRegistro])
+  @@index([plantillaId])
+  @@index([usuarioId])
+}
+enum Prioridad {
+  BAJA
+  PREDETERMINADA
+  ALTA
+  SUPER_ALTA
+}
+
+enum EstadoRegistro {
+  PENDIENTE
+  EN_PROCESO
+  COMPLETADO
+}

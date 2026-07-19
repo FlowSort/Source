@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../src/generated/control"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("CONTROL_DATABASE_URL")
+}
+model Empresa {
+  id String @id @default(uuid())
+  nombre String
+  logoUrl String?
+  modoHostingDB ModoHostingDB @default(GOOGLE_CLOUD)
+  conexionCifrada String?
+  schemaTenant String? @unique
+  creadoEn DateTime @default(now())
+  usuarios Usuario[]
+}
+model Usuario {
+  id String @id @default(uuid())
+  empresaId String
+  empresa Empresa @relation(fields:[empresaId],references:[id],onDelete:Cascade)
+  nombre String
+  email String @unique
+  passwordHash String
+  rol RolUsuario @default(EMPLEADO)
+  activo Boolean @default(true)
+  tokenVersion Int @default(0)
+  creadoEn DateTime @default(now())
+  @@index([empresaId,activo])
+}
+enum ModoHostingDB {
+  AUTOALOJADO
+  GOOGLE_CLOUD
+}
+
+enum RolUsuario {
+  ADMIN_EMPRESA
+  EMPLEADO
+}

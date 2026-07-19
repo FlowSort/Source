@@ -1,0 +1,1 @@
+import type { NextFunction,Request,Response,RequestHandler } from "express";export const ruta=(fn:(req:Request,res:Response,next:NextFunction)=>Promise<unknown>):RequestHandler=>(req,res,next)=>{void fn(req,res,next).catch(next)};

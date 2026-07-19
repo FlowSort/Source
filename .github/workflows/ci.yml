@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CONTROL_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/flowsort
+  MANAGED_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/flowsort
+  JWT_ACCESS_SECRET: ci-access-secret-at-least-24-characters
+  JWT_REFRESH_SECRET: ci-refresh-secret-at-least-24-characters
+  ENCRYPTION_MASTER_KEY_BASE64: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+  VITE_API_URL: http://localhost:4000/api
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: flowsort
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d flowsort"
+          --health-interval 3s
+          --health-timeout 3s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @flowsort/backend prisma:generate
+      - run: pnpm exec prisma db push --schema backend/prisma/control/schema.prisma
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+  desktop-installers:
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/v')
+    needs: validate
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            artifact: flowsort-macos
+          - os: windows-latest
+            artifact: flowsort-windows
+          - os: ubuntu-latest
+            artifact: flowsort-linux
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.13.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm --filter @flowsort/shared build
+      - run: pnpm --filter @flowsort/desktop dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: apps/desktop/release/*
+          if-no-files-found: error
+          retention-days: 14
