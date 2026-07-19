@@ -114,6 +114,15 @@ exports.Prisma.RegistroScalarFieldEnum = {
   fechaActualizacion: 'fechaActualizacion'
 };
 
+exports.Prisma.AuditEventScalarFieldEnum = {
+  id: 'id',
+  registroId: 'registroId',
+  usuarioId: 'usuarioId',
+  accion: 'accion',
+  detalle: 'detalle',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -153,7 +162,8 @@ exports.EstadoRegistro = exports.$Enums.EstadoRegistro = {
 
 exports.Prisma.ModelName = {
   Plantilla: 'Plantilla',
-  Registro: 'Registro'
+  Registro: 'Registro',
+  AuditEvent: 'AuditEvent'
 };
 /**
  * Create the Client
@@ -202,13 +212,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/tenant\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"MANAGED_DATABASE_URL\")\n}\n\nmodel Plantilla {\n  id          String     @id @default(uuid())\n  nombre      String     @unique\n  descripcion String?\n  esDefault   Boolean    @default(false)\n  campos      Json\n  registros   Registro[]\n}\n\nmodel Registro {\n  id                 String         @id @default(uuid())\n  nombreCliente      String\n  contacto           String?\n  plantillaId        String\n  plantilla          Plantilla      @relation(fields: [plantillaId], references: [id])\n  especificaciones   Json\n  prioridad          Prioridad      @default(PREDETERMINADA)\n  estado             EstadoRegistro @default(PENDIENTE)\n  usuarioId          String\n  fechaRegistro      DateTime       @default(now())\n  fechaActualizacion DateTime       @updatedAt\n\n  @@index([prioridad])\n  @@index([fechaRegistro])\n  @@index([plantillaId])\n  @@index([usuarioId])\n}\n\nenum Prioridad {\n  BAJA\n  PREDETERMINADA\n  ALTA\n  SUPER_ALTA\n}\n\nenum EstadoRegistro {\n  PENDIENTE\n  EN_PROCESO\n  COMPLETADO\n}\n",
-  "inlineSchemaHash": "ef03f450838fe0406f920b58fd00ffa6f554c0deab8bf4fd4b25ff2b32b18e15",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/tenant\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"MANAGED_DATABASE_URL\")\n}\n\nmodel Plantilla {\n  id          String     @id @default(uuid())\n  nombre      String     @unique\n  descripcion String?\n  esDefault   Boolean    @default(false)\n  campos      Json\n  registros   Registro[]\n}\n\nmodel Registro {\n  id                 String         @id @default(uuid())\n  nombreCliente      String\n  contacto           String?\n  plantillaId        String\n  plantilla          Plantilla      @relation(fields: [plantillaId], references: [id])\n  especificaciones   Json\n  prioridad          Prioridad      @default(PREDETERMINADA)\n  estado             EstadoRegistro @default(PENDIENTE)\n  usuarioId          String\n  fechaRegistro      DateTime       @default(now())\n  fechaActualizacion DateTime       @updatedAt\n  auditoria          AuditEvent[]\n\n  @@index([prioridad])\n  @@index([fechaRegistro])\n  @@index([plantillaId])\n  @@index([usuarioId])\n}\n\nmodel AuditEvent {\n  id         String   @id @default(uuid())\n  registroId String\n  registro   Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)\n  usuarioId  String\n  accion     String\n  detalle    String\n  creadoEn   DateTime @default(now())\n\n  @@index([registroId, creadoEn])\n}\n\nenum Prioridad {\n  BAJA\n  PREDETERMINADA\n  ALTA\n  SUPER_ALTA\n}\n\nenum EstadoRegistro {\n  PENDIENTE\n  EN_PROCESO\n  COMPLETADO\n}\n",
+  "inlineSchemaHash": "869ab4ca3e6ce164b60c35275074c506f0643e81dda2d40b8e04698146bffd0c",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Plantilla\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"esDefault\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"campos\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"registros\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"PlantillaToRegistro\"}],\"dbName\":null},\"Registro\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombreCliente\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contacto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantillaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantilla\",\"kind\":\"object\",\"type\":\"Plantilla\",\"relationName\":\"PlantillaToRegistro\"},{\"name\":\"especificaciones\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"prioridad\",\"kind\":\"enum\",\"type\":\"Prioridad\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechaRegistro\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fechaActualizacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Plantilla\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"esDefault\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"campos\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"registros\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"PlantillaToRegistro\"}],\"dbName\":null},\"Registro\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombreCliente\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contacto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantillaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantilla\",\"kind\":\"object\",\"type\":\"Plantilla\",\"relationName\":\"PlantillaToRegistro\"},{\"name\":\"especificaciones\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"prioridad\",\"kind\":\"enum\",\"type\":\"Prioridad\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechaRegistro\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fechaActualizacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"auditoria\",\"kind\":\"object\",\"type\":\"AuditEvent\",\"relationName\":\"AuditEventToRegistro\"}],\"dbName\":null},\"AuditEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registroId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registro\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"AuditEventToRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"detalle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

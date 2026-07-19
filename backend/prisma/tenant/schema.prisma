@@ -27,10 +27,21 @@ model Registro {
   usuarioId String
   fechaRegistro DateTime @default(now())
   fechaActualizacion DateTime @updatedAt
+  auditoria AuditEvent[]
   @@index([prioridad])
   @@index([fechaRegistro])
   @@index([plantillaId])
   @@index([usuarioId])
+}
+model AuditEvent {
+  id String @id @default(uuid())
+  registroId String
+  registro Registro @relation(fields:[registroId], references:[id], onDelete:Cascade)
+  usuarioId String
+  accion String
+  detalle String
+  creadoEn DateTime @default(now())
+  @@index([registroId, creadoEn])
 }
 enum Prioridad {
   BAJA

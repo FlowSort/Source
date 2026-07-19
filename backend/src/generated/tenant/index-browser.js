@@ -142,6 +142,15 @@ exports.Prisma.RegistroScalarFieldEnum = {
   fechaActualizacion: 'fechaActualizacion'
 };
 
+exports.Prisma.AuditEventScalarFieldEnum = {
+  id: 'id',
+  registroId: 'registroId',
+  usuarioId: 'usuarioId',
+  accion: 'accion',
+  detalle: 'detalle',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -181,7 +190,8 @@ exports.EstadoRegistro = exports.$Enums.EstadoRegistro = {
 
 exports.Prisma.ModelName = {
   Plantilla: 'Plantilla',
-  Registro: 'Registro'
+  Registro: 'Registro',
+  AuditEvent: 'AuditEvent'
 };
 
 /**
