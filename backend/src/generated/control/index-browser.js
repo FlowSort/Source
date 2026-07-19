@@ -131,6 +131,15 @@ exports.Prisma.EmpresaScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.InboundChannelRouteScalarFieldEnum = {
+  id: 'id',
+  empresaId: 'empresaId',
+  channelId: 'channelId',
+  tokenHash: 'tokenHash',
+  isActive: 'isActive',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.UsuarioScalarFieldEnum = {
   id: 'id',
   empresaId: 'empresaId',
@@ -169,6 +178,7 @@ exports.RolUsuario = exports.$Enums.RolUsuario = {
 
 exports.Prisma.ModelName = {
   Empresa: 'Empresa',
+  InboundChannelRoute: 'InboundChannelRoute',
   Usuario: 'Usuario'
 };
 

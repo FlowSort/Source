@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Plantilla = $Result.DefaultSelection<Prisma.$PlantillaPayload>
 /**
+ * Model InboundChannel
+ * 
+ */
+export type InboundChannel = $Result.DefaultSelection<Prisma.$InboundChannelPayload>
+/**
  * Model Registro
  * 
  */
@@ -51,6 +56,16 @@ export const EstadoRegistro: {
 
 export type EstadoRegistro = (typeof EstadoRegistro)[keyof typeof EstadoRegistro]
 
+
+export const InboundChannelType: {
+  KIOSK: 'KIOSK',
+  WEB_FORM: 'WEB_FORM',
+  WEBHOOK: 'WEBHOOK',
+  QR: 'QR'
+};
+
+export type InboundChannelType = (typeof InboundChannelType)[keyof typeof InboundChannelType]
+
 }
 
 export type Prioridad = $Enums.Prioridad
@@ -60,6 +75,10 @@ export const Prioridad: typeof $Enums.Prioridad
 export type EstadoRegistro = $Enums.EstadoRegistro
 
 export const EstadoRegistro: typeof $Enums.EstadoRegistro
+
+export type InboundChannelType = $Enums.InboundChannelType
+
+export const InboundChannelType: typeof $Enums.InboundChannelType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -188,6 +207,16 @@ export class PrismaClient<
     * ```
     */
   get plantilla(): Prisma.PlantillaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboundChannel`: Exposes CRUD operations for the **InboundChannel** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboundChannels
+    * const inboundChannels = await prisma.inboundChannel.findMany()
+    * ```
+    */
+  get inboundChannel(): Prisma.InboundChannelDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.registro`: Exposes CRUD operations for the **Registro** model.
@@ -650,6 +679,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Plantilla: 'Plantilla',
+    InboundChannel: 'InboundChannel',
     Registro: 'Registro',
     AuditEvent: 'AuditEvent'
   };
@@ -670,7 +700,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "plantilla" | "registro" | "auditEvent"
+      modelProps: "plantilla" | "inboundChannel" | "registro" | "auditEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -745,6 +775,80 @@ export namespace Prisma {
           count: {
             args: Prisma.PlantillaCountArgs<ExtArgs>
             result: $Utils.Optional<PlantillaCountAggregateOutputType> | number
+          }
+        }
+      }
+      InboundChannel: {
+        payload: Prisma.$InboundChannelPayload<ExtArgs>
+        fields: Prisma.InboundChannelFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboundChannelFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboundChannelFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          findFirst: {
+            args: Prisma.InboundChannelFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboundChannelFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          findMany: {
+            args: Prisma.InboundChannelFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>[]
+          }
+          create: {
+            args: Prisma.InboundChannelCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          createMany: {
+            args: Prisma.InboundChannelCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboundChannelCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>[]
+          }
+          delete: {
+            args: Prisma.InboundChannelDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          update: {
+            args: Prisma.InboundChannelUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          deleteMany: {
+            args: Prisma.InboundChannelDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboundChannelUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboundChannelUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>[]
+          }
+          upsert: {
+            args: Prisma.InboundChannelUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelPayload>
+          }
+          aggregate: {
+            args: Prisma.InboundChannelAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboundChannel>
+          }
+          groupBy: {
+            args: Prisma.InboundChannelGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboundChannelGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboundChannelCountArgs<ExtArgs>
+            result: $Utils.Optional<InboundChannelCountAggregateOutputType> | number
           }
         }
       }
@@ -993,6 +1097,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     plantilla?: PlantillaOmit
+    inboundChannel?: InboundChannelOmit
     registro?: RegistroOmit
     auditEvent?: AuditEventOmit
   }
@@ -1076,10 +1181,12 @@ export namespace Prisma {
 
   export type PlantillaCountOutputType = {
     registros: number
+    inboundChannels: number
   }
 
   export type PlantillaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     registros?: boolean | PlantillaCountOutputTypeCountRegistrosArgs
+    inboundChannels?: boolean | PlantillaCountOutputTypeCountInboundChannelsArgs
   }
 
   // Custom InputTypes
@@ -1097,6 +1204,44 @@ export namespace Prisma {
    * PlantillaCountOutputType without action
    */
   export type PlantillaCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RegistroWhereInput
+  }
+
+  /**
+   * PlantillaCountOutputType without action
+   */
+  export type PlantillaCountOutputTypeCountInboundChannelsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboundChannelWhereInput
+  }
+
+
+  /**
+   * Count Type InboundChannelCountOutputType
+   */
+
+  export type InboundChannelCountOutputType = {
+    registros: number
+  }
+
+  export type InboundChannelCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    registros?: boolean | InboundChannelCountOutputTypeCountRegistrosArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * InboundChannelCountOutputType without action
+   */
+  export type InboundChannelCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelCountOutputType
+     */
+    select?: InboundChannelCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * InboundChannelCountOutputType without action
+   */
+  export type InboundChannelCountOutputTypeCountRegistrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: RegistroWhereInput
   }
 
@@ -1297,6 +1442,7 @@ export namespace Prisma {
     esDefault?: boolean
     campos?: boolean
     registros?: boolean | Plantilla$registrosArgs<ExtArgs>
+    inboundChannels?: boolean | Plantilla$inboundChannelsArgs<ExtArgs>
     _count?: boolean | PlantillaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["plantilla"]>
 
@@ -1327,6 +1473,7 @@ export namespace Prisma {
   export type PlantillaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "descripcion" | "esDefault" | "campos", ExtArgs["result"]["plantilla"]>
   export type PlantillaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     registros?: boolean | Plantilla$registrosArgs<ExtArgs>
+    inboundChannels?: boolean | Plantilla$inboundChannelsArgs<ExtArgs>
     _count?: boolean | PlantillaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlantillaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1336,6 +1483,7 @@ export namespace Prisma {
     name: "Plantilla"
     objects: {
       registros: Prisma.$RegistroPayload<ExtArgs>[]
+      inboundChannels: Prisma.$InboundChannelPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1738,6 +1886,7 @@ export namespace Prisma {
   export interface Prisma__PlantillaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     registros<T extends Plantilla$registrosArgs<ExtArgs> = {}>(args?: Subset<T, Plantilla$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inboundChannels<T extends Plantilla$inboundChannelsArgs<ExtArgs> = {}>(args?: Subset<T, Plantilla$inboundChannelsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2184,6 +2333,30 @@ export namespace Prisma {
   }
 
   /**
+   * Plantilla.inboundChannels
+   */
+  export type Plantilla$inboundChannelsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    where?: InboundChannelWhereInput
+    orderBy?: InboundChannelOrderByWithRelationInput | InboundChannelOrderByWithRelationInput[]
+    cursor?: InboundChannelWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InboundChannelScalarFieldEnum | InboundChannelScalarFieldEnum[]
+  }
+
+  /**
    * Plantilla without action
    */
   export type PlantillaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2199,6 +2372,1155 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PlantillaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InboundChannel
+   */
+
+  export type AggregateInboundChannel = {
+    _count: InboundChannelCountAggregateOutputType | null
+    _min: InboundChannelMinAggregateOutputType | null
+    _max: InboundChannelMaxAggregateOutputType | null
+  }
+
+  export type InboundChannelMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    channelType: $Enums.InboundChannelType | null
+    tokenHash: string | null
+    templateId: string | null
+    defaultPriority: $Enums.Prioridad | null
+    isActive: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type InboundChannelMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    channelType: $Enums.InboundChannelType | null
+    tokenHash: string | null
+    templateId: string | null
+    defaultPriority: $Enums.Prioridad | null
+    isActive: boolean | null
+    creadoEn: Date | null
+    actualizadoEn: Date | null
+  }
+
+  export type InboundChannelCountAggregateOutputType = {
+    id: number
+    name: number
+    channelType: number
+    tokenHash: number
+    templateId: number
+    defaultPriority: number
+    isActive: number
+    metadata: number
+    creadoEn: number
+    actualizadoEn: number
+    _all: number
+  }
+
+
+  export type InboundChannelMinAggregateInputType = {
+    id?: true
+    name?: true
+    channelType?: true
+    tokenHash?: true
+    templateId?: true
+    defaultPriority?: true
+    isActive?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type InboundChannelMaxAggregateInputType = {
+    id?: true
+    name?: true
+    channelType?: true
+    tokenHash?: true
+    templateId?: true
+    defaultPriority?: true
+    isActive?: true
+    creadoEn?: true
+    actualizadoEn?: true
+  }
+
+  export type InboundChannelCountAggregateInputType = {
+    id?: true
+    name?: true
+    channelType?: true
+    tokenHash?: true
+    templateId?: true
+    defaultPriority?: true
+    isActive?: true
+    metadata?: true
+    creadoEn?: true
+    actualizadoEn?: true
+    _all?: true
+  }
+
+  export type InboundChannelAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboundChannel to aggregate.
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannels to fetch.
+     */
+    orderBy?: InboundChannelOrderByWithRelationInput | InboundChannelOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboundChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboundChannels
+    **/
+    _count?: true | InboundChannelCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboundChannelMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboundChannelMaxAggregateInputType
+  }
+
+  export type GetInboundChannelAggregateType<T extends InboundChannelAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboundChannel]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboundChannel[P]>
+      : GetScalarType<T[P], AggregateInboundChannel[P]>
+  }
+
+
+
+
+  export type InboundChannelGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboundChannelWhereInput
+    orderBy?: InboundChannelOrderByWithAggregationInput | InboundChannelOrderByWithAggregationInput[]
+    by: InboundChannelScalarFieldEnum[] | InboundChannelScalarFieldEnum
+    having?: InboundChannelScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboundChannelCountAggregateInputType | true
+    _min?: InboundChannelMinAggregateInputType
+    _max?: InboundChannelMaxAggregateInputType
+  }
+
+  export type InboundChannelGroupByOutputType = {
+    id: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    templateId: string
+    defaultPriority: $Enums.Prioridad
+    isActive: boolean
+    metadata: JsonValue
+    creadoEn: Date
+    actualizadoEn: Date
+    _count: InboundChannelCountAggregateOutputType | null
+    _min: InboundChannelMinAggregateOutputType | null
+    _max: InboundChannelMaxAggregateOutputType | null
+  }
+
+  type GetInboundChannelGroupByPayload<T extends InboundChannelGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboundChannelGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboundChannelGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboundChannelGroupByOutputType[P]>
+            : GetScalarType<T[P], InboundChannelGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboundChannelSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    channelType?: boolean
+    tokenHash?: boolean
+    templateId?: boolean
+    defaultPriority?: boolean
+    isActive?: boolean
+    metadata?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+    registros?: boolean | InboundChannel$registrosArgs<ExtArgs>
+    _count?: boolean | InboundChannelCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannel"]>
+
+  export type InboundChannelSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    channelType?: boolean
+    tokenHash?: boolean
+    templateId?: boolean
+    defaultPriority?: boolean
+    isActive?: boolean
+    metadata?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannel"]>
+
+  export type InboundChannelSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    channelType?: boolean
+    tokenHash?: boolean
+    templateId?: boolean
+    defaultPriority?: boolean
+    isActive?: boolean
+    metadata?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannel"]>
+
+  export type InboundChannelSelectScalar = {
+    id?: boolean
+    name?: boolean
+    channelType?: boolean
+    tokenHash?: boolean
+    templateId?: boolean
+    defaultPriority?: boolean
+    isActive?: boolean
+    metadata?: boolean
+    creadoEn?: boolean
+    actualizadoEn?: boolean
+  }
+
+  export type InboundChannelOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "channelType" | "tokenHash" | "templateId" | "defaultPriority" | "isActive" | "metadata" | "creadoEn" | "actualizadoEn", ExtArgs["result"]["inboundChannel"]>
+  export type InboundChannelInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+    registros?: boolean | InboundChannel$registrosArgs<ExtArgs>
+    _count?: boolean | InboundChannelCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type InboundChannelIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+  }
+  export type InboundChannelIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | PlantillaDefaultArgs<ExtArgs>
+  }
+
+  export type $InboundChannelPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboundChannel"
+    objects: {
+      template: Prisma.$PlantillaPayload<ExtArgs>
+      registros: Prisma.$RegistroPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      channelType: $Enums.InboundChannelType
+      tokenHash: string
+      templateId: string
+      defaultPriority: $Enums.Prioridad
+      isActive: boolean
+      metadata: Prisma.JsonValue
+      creadoEn: Date
+      actualizadoEn: Date
+    }, ExtArgs["result"]["inboundChannel"]>
+    composites: {}
+  }
+
+  type InboundChannelGetPayload<S extends boolean | null | undefined | InboundChannelDefaultArgs> = $Result.GetResult<Prisma.$InboundChannelPayload, S>
+
+  type InboundChannelCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboundChannelFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboundChannelCountAggregateInputType | true
+    }
+
+  export interface InboundChannelDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboundChannel'], meta: { name: 'InboundChannel' } }
+    /**
+     * Find zero or one InboundChannel that matches the filter.
+     * @param {InboundChannelFindUniqueArgs} args - Arguments to find a InboundChannel
+     * @example
+     * // Get one InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboundChannelFindUniqueArgs>(args: SelectSubset<T, InboundChannelFindUniqueArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboundChannel that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboundChannelFindUniqueOrThrowArgs} args - Arguments to find a InboundChannel
+     * @example
+     * // Get one InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboundChannelFindUniqueOrThrowArgs>(args: SelectSubset<T, InboundChannelFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboundChannel that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelFindFirstArgs} args - Arguments to find a InboundChannel
+     * @example
+     * // Get one InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboundChannelFindFirstArgs>(args?: SelectSubset<T, InboundChannelFindFirstArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboundChannel that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelFindFirstOrThrowArgs} args - Arguments to find a InboundChannel
+     * @example
+     * // Get one InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboundChannelFindFirstOrThrowArgs>(args?: SelectSubset<T, InboundChannelFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboundChannels that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboundChannels
+     * const inboundChannels = await prisma.inboundChannel.findMany()
+     * 
+     * // Get first 10 InboundChannels
+     * const inboundChannels = await prisma.inboundChannel.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboundChannelWithIdOnly = await prisma.inboundChannel.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboundChannelFindManyArgs>(args?: SelectSubset<T, InboundChannelFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboundChannel.
+     * @param {InboundChannelCreateArgs} args - Arguments to create a InboundChannel.
+     * @example
+     * // Create one InboundChannel
+     * const InboundChannel = await prisma.inboundChannel.create({
+     *   data: {
+     *     // ... data to create a InboundChannel
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboundChannelCreateArgs>(args: SelectSubset<T, InboundChannelCreateArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboundChannels.
+     * @param {InboundChannelCreateManyArgs} args - Arguments to create many InboundChannels.
+     * @example
+     * // Create many InboundChannels
+     * const inboundChannel = await prisma.inboundChannel.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboundChannelCreateManyArgs>(args?: SelectSubset<T, InboundChannelCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboundChannels and returns the data saved in the database.
+     * @param {InboundChannelCreateManyAndReturnArgs} args - Arguments to create many InboundChannels.
+     * @example
+     * // Create many InboundChannels
+     * const inboundChannel = await prisma.inboundChannel.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboundChannels and only return the `id`
+     * const inboundChannelWithIdOnly = await prisma.inboundChannel.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboundChannelCreateManyAndReturnArgs>(args?: SelectSubset<T, InboundChannelCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboundChannel.
+     * @param {InboundChannelDeleteArgs} args - Arguments to delete one InboundChannel.
+     * @example
+     * // Delete one InboundChannel
+     * const InboundChannel = await prisma.inboundChannel.delete({
+     *   where: {
+     *     // ... filter to delete one InboundChannel
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboundChannelDeleteArgs>(args: SelectSubset<T, InboundChannelDeleteArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboundChannel.
+     * @param {InboundChannelUpdateArgs} args - Arguments to update one InboundChannel.
+     * @example
+     * // Update one InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboundChannelUpdateArgs>(args: SelectSubset<T, InboundChannelUpdateArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboundChannels.
+     * @param {InboundChannelDeleteManyArgs} args - Arguments to filter InboundChannels to delete.
+     * @example
+     * // Delete a few InboundChannels
+     * const { count } = await prisma.inboundChannel.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboundChannelDeleteManyArgs>(args?: SelectSubset<T, InboundChannelDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboundChannels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboundChannels
+     * const inboundChannel = await prisma.inboundChannel.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboundChannelUpdateManyArgs>(args: SelectSubset<T, InboundChannelUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboundChannels and returns the data updated in the database.
+     * @param {InboundChannelUpdateManyAndReturnArgs} args - Arguments to update many InboundChannels.
+     * @example
+     * // Update many InboundChannels
+     * const inboundChannel = await prisma.inboundChannel.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboundChannels and only return the `id`
+     * const inboundChannelWithIdOnly = await prisma.inboundChannel.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboundChannelUpdateManyAndReturnArgs>(args: SelectSubset<T, InboundChannelUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboundChannel.
+     * @param {InboundChannelUpsertArgs} args - Arguments to update or create a InboundChannel.
+     * @example
+     * // Update or create a InboundChannel
+     * const inboundChannel = await prisma.inboundChannel.upsert({
+     *   create: {
+     *     // ... data to create a InboundChannel
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboundChannel we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboundChannelUpsertArgs>(args: SelectSubset<T, InboundChannelUpsertArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboundChannels.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelCountArgs} args - Arguments to filter InboundChannels to count.
+     * @example
+     * // Count the number of InboundChannels
+     * const count = await prisma.inboundChannel.count({
+     *   where: {
+     *     // ... the filter for the InboundChannels we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboundChannelCountArgs>(
+      args?: Subset<T, InboundChannelCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboundChannelCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboundChannel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboundChannelAggregateArgs>(args: Subset<T, InboundChannelAggregateArgs>): Prisma.PrismaPromise<GetInboundChannelAggregateType<T>>
+
+    /**
+     * Group by InboundChannel.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboundChannelGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboundChannelGroupByArgs['orderBy'] }
+        : { orderBy?: InboundChannelGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboundChannelGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboundChannelGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboundChannel model
+   */
+  readonly fields: InboundChannelFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboundChannel.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboundChannelClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    template<T extends PlantillaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlantillaDefaultArgs<ExtArgs>>): Prisma__PlantillaClient<$Result.GetResult<Prisma.$PlantillaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    registros<T extends InboundChannel$registrosArgs<ExtArgs> = {}>(args?: Subset<T, InboundChannel$registrosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RegistroPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboundChannel model
+   */
+  interface InboundChannelFieldRefs {
+    readonly id: FieldRef<"InboundChannel", 'String'>
+    readonly name: FieldRef<"InboundChannel", 'String'>
+    readonly channelType: FieldRef<"InboundChannel", 'InboundChannelType'>
+    readonly tokenHash: FieldRef<"InboundChannel", 'String'>
+    readonly templateId: FieldRef<"InboundChannel", 'String'>
+    readonly defaultPriority: FieldRef<"InboundChannel", 'Prioridad'>
+    readonly isActive: FieldRef<"InboundChannel", 'Boolean'>
+    readonly metadata: FieldRef<"InboundChannel", 'Json'>
+    readonly creadoEn: FieldRef<"InboundChannel", 'DateTime'>
+    readonly actualizadoEn: FieldRef<"InboundChannel", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboundChannel findUnique
+   */
+  export type InboundChannelFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannel to fetch.
+     */
+    where: InboundChannelWhereUniqueInput
+  }
+
+  /**
+   * InboundChannel findUniqueOrThrow
+   */
+  export type InboundChannelFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannel to fetch.
+     */
+    where: InboundChannelWhereUniqueInput
+  }
+
+  /**
+   * InboundChannel findFirst
+   */
+  export type InboundChannelFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannel to fetch.
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannels to fetch.
+     */
+    orderBy?: InboundChannelOrderByWithRelationInput | InboundChannelOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboundChannels.
+     */
+    cursor?: InboundChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboundChannels.
+     */
+    distinct?: InboundChannelScalarFieldEnum | InboundChannelScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannel findFirstOrThrow
+   */
+  export type InboundChannelFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannel to fetch.
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannels to fetch.
+     */
+    orderBy?: InboundChannelOrderByWithRelationInput | InboundChannelOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboundChannels.
+     */
+    cursor?: InboundChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannels.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboundChannels.
+     */
+    distinct?: InboundChannelScalarFieldEnum | InboundChannelScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannel findMany
+   */
+  export type InboundChannelFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannels to fetch.
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannels to fetch.
+     */
+    orderBy?: InboundChannelOrderByWithRelationInput | InboundChannelOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboundChannels.
+     */
+    cursor?: InboundChannelWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannels from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannels.
+     */
+    skip?: number
+    distinct?: InboundChannelScalarFieldEnum | InboundChannelScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannel create
+   */
+  export type InboundChannelCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InboundChannel.
+     */
+    data: XOR<InboundChannelCreateInput, InboundChannelUncheckedCreateInput>
+  }
+
+  /**
+   * InboundChannel createMany
+   */
+  export type InboundChannelCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboundChannels.
+     */
+    data: InboundChannelCreateManyInput | InboundChannelCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboundChannel createManyAndReturn
+   */
+  export type InboundChannelCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboundChannels.
+     */
+    data: InboundChannelCreateManyInput | InboundChannelCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboundChannel update
+   */
+  export type InboundChannelUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InboundChannel.
+     */
+    data: XOR<InboundChannelUpdateInput, InboundChannelUncheckedUpdateInput>
+    /**
+     * Choose, which InboundChannel to update.
+     */
+    where: InboundChannelWhereUniqueInput
+  }
+
+  /**
+   * InboundChannel updateMany
+   */
+  export type InboundChannelUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboundChannels.
+     */
+    data: XOR<InboundChannelUpdateManyMutationInput, InboundChannelUncheckedUpdateManyInput>
+    /**
+     * Filter which InboundChannels to update
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * Limit how many InboundChannels to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboundChannel updateManyAndReturn
+   */
+  export type InboundChannelUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * The data used to update InboundChannels.
+     */
+    data: XOR<InboundChannelUpdateManyMutationInput, InboundChannelUncheckedUpdateManyInput>
+    /**
+     * Filter which InboundChannels to update
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * Limit how many InboundChannels to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboundChannel upsert
+   */
+  export type InboundChannelUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InboundChannel to update in case it exists.
+     */
+    where: InboundChannelWhereUniqueInput
+    /**
+     * In case the InboundChannel found by the `where` argument doesn't exist, create a new InboundChannel with this data.
+     */
+    create: XOR<InboundChannelCreateInput, InboundChannelUncheckedCreateInput>
+    /**
+     * In case the InboundChannel was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboundChannelUpdateInput, InboundChannelUncheckedUpdateInput>
+  }
+
+  /**
+   * InboundChannel delete
+   */
+  export type InboundChannelDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    /**
+     * Filter which InboundChannel to delete.
+     */
+    where: InboundChannelWhereUniqueInput
+  }
+
+  /**
+   * InboundChannel deleteMany
+   */
+  export type InboundChannelDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboundChannels to delete
+     */
+    where?: InboundChannelWhereInput
+    /**
+     * Limit how many InboundChannels to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboundChannel.registros
+   */
+  export type InboundChannel$registrosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Registro
+     */
+    select?: RegistroSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Registro
+     */
+    omit?: RegistroOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RegistroInclude<ExtArgs> | null
+    where?: RegistroWhereInput
+    orderBy?: RegistroOrderByWithRelationInput | RegistroOrderByWithRelationInput[]
+    cursor?: RegistroWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RegistroScalarFieldEnum | RegistroScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannel without action
+   */
+  export type InboundChannelDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
   }
 
 
@@ -2222,6 +3544,7 @@ export namespace Prisma {
     usuarioId: string | null
     fechaRegistro: Date | null
     fechaActualizacion: Date | null
+    inboundChannelId: string | null
   }
 
   export type RegistroMaxAggregateOutputType = {
@@ -2234,6 +3557,7 @@ export namespace Prisma {
     usuarioId: string | null
     fechaRegistro: Date | null
     fechaActualizacion: Date | null
+    inboundChannelId: string | null
   }
 
   export type RegistroCountAggregateOutputType = {
@@ -2247,6 +3571,8 @@ export namespace Prisma {
     usuarioId: number
     fechaRegistro: number
     fechaActualizacion: number
+    inboundChannelId: number
+    inboundMetadata: number
     _all: number
   }
 
@@ -2261,6 +3587,7 @@ export namespace Prisma {
     usuarioId?: true
     fechaRegistro?: true
     fechaActualizacion?: true
+    inboundChannelId?: true
   }
 
   export type RegistroMaxAggregateInputType = {
@@ -2273,6 +3600,7 @@ export namespace Prisma {
     usuarioId?: true
     fechaRegistro?: true
     fechaActualizacion?: true
+    inboundChannelId?: true
   }
 
   export type RegistroCountAggregateInputType = {
@@ -2286,6 +3614,8 @@ export namespace Prisma {
     usuarioId?: true
     fechaRegistro?: true
     fechaActualizacion?: true
+    inboundChannelId?: true
+    inboundMetadata?: true
     _all?: true
   }
 
@@ -2372,6 +3702,8 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro: Date
     fechaActualizacion: Date
+    inboundChannelId: string | null
+    inboundMetadata: JsonValue | null
     _count: RegistroCountAggregateOutputType | null
     _min: RegistroMinAggregateOutputType | null
     _max: RegistroMaxAggregateOutputType | null
@@ -2402,8 +3734,11 @@ export namespace Prisma {
     usuarioId?: boolean
     fechaRegistro?: boolean
     fechaActualizacion?: boolean
+    inboundChannelId?: boolean
+    inboundMetadata?: boolean
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
     auditoria?: boolean | Registro$auditoriaArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
     _count?: boolean | RegistroCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["registro"]>
 
@@ -2418,7 +3753,10 @@ export namespace Prisma {
     usuarioId?: boolean
     fechaRegistro?: boolean
     fechaActualizacion?: boolean
+    inboundChannelId?: boolean
+    inboundMetadata?: boolean
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
   }, ExtArgs["result"]["registro"]>
 
   export type RegistroSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2432,7 +3770,10 @@ export namespace Prisma {
     usuarioId?: boolean
     fechaRegistro?: boolean
     fechaActualizacion?: boolean
+    inboundChannelId?: boolean
+    inboundMetadata?: boolean
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
   }, ExtArgs["result"]["registro"]>
 
   export type RegistroSelectScalar = {
@@ -2446,19 +3787,24 @@ export namespace Prisma {
     usuarioId?: boolean
     fechaRegistro?: boolean
     fechaActualizacion?: boolean
+    inboundChannelId?: boolean
+    inboundMetadata?: boolean
   }
 
-  export type RegistroOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombreCliente" | "contacto" | "plantillaId" | "especificaciones" | "prioridad" | "estado" | "usuarioId" | "fechaRegistro" | "fechaActualizacion", ExtArgs["result"]["registro"]>
+  export type RegistroOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombreCliente" | "contacto" | "plantillaId" | "especificaciones" | "prioridad" | "estado" | "usuarioId" | "fechaRegistro" | "fechaActualizacion" | "inboundChannelId" | "inboundMetadata", ExtArgs["result"]["registro"]>
   export type RegistroInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
     auditoria?: boolean | Registro$auditoriaArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
     _count?: boolean | RegistroCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type RegistroIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
   }
   export type RegistroIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     plantilla?: boolean | PlantillaDefaultArgs<ExtArgs>
+    inboundChannel?: boolean | Registro$inboundChannelArgs<ExtArgs>
   }
 
   export type $RegistroPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2466,6 +3812,7 @@ export namespace Prisma {
     objects: {
       plantilla: Prisma.$PlantillaPayload<ExtArgs>
       auditoria: Prisma.$AuditEventPayload<ExtArgs>[]
+      inboundChannel: Prisma.$InboundChannelPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2478,6 +3825,8 @@ export namespace Prisma {
       usuarioId: string
       fechaRegistro: Date
       fechaActualizacion: Date
+      inboundChannelId: string | null
+      inboundMetadata: Prisma.JsonValue | null
     }, ExtArgs["result"]["registro"]>
     composites: {}
   }
@@ -2874,6 +4223,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     plantilla<T extends PlantillaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlantillaDefaultArgs<ExtArgs>>): Prisma__PlantillaClient<$Result.GetResult<Prisma.$PlantillaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     auditoria<T extends Registro$auditoriaArgs<ExtArgs> = {}>(args?: Subset<T, Registro$auditoriaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inboundChannel<T extends Registro$inboundChannelArgs<ExtArgs> = {}>(args?: Subset<T, Registro$inboundChannelArgs<ExtArgs>>): Prisma__InboundChannelClient<$Result.GetResult<Prisma.$InboundChannelPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2913,6 +4263,8 @@ export namespace Prisma {
     readonly usuarioId: FieldRef<"Registro", 'String'>
     readonly fechaRegistro: FieldRef<"Registro", 'DateTime'>
     readonly fechaActualizacion: FieldRef<"Registro", 'DateTime'>
+    readonly inboundChannelId: FieldRef<"Registro", 'String'>
+    readonly inboundMetadata: FieldRef<"Registro", 'Json'>
   }
     
 
@@ -3330,6 +4682,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuditEventScalarFieldEnum | AuditEventScalarFieldEnum[]
+  }
+
+  /**
+   * Registro.inboundChannel
+   */
+  export type Registro$inboundChannelArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannel
+     */
+    select?: InboundChannelSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannel
+     */
+    omit?: InboundChannelOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelInclude<ExtArgs> | null
+    where?: InboundChannelWhereInput
   }
 
   /**
@@ -4447,6 +5818,22 @@ export namespace Prisma {
   export type PlantillaScalarFieldEnum = (typeof PlantillaScalarFieldEnum)[keyof typeof PlantillaScalarFieldEnum]
 
 
+  export const InboundChannelScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    channelType: 'channelType',
+    tokenHash: 'tokenHash',
+    templateId: 'templateId',
+    defaultPriority: 'defaultPriority',
+    isActive: 'isActive',
+    metadata: 'metadata',
+    creadoEn: 'creadoEn',
+    actualizadoEn: 'actualizadoEn'
+  };
+
+  export type InboundChannelScalarFieldEnum = (typeof InboundChannelScalarFieldEnum)[keyof typeof InboundChannelScalarFieldEnum]
+
+
   export const RegistroScalarFieldEnum: {
     id: 'id',
     nombreCliente: 'nombreCliente',
@@ -4457,7 +5844,9 @@ export namespace Prisma {
     estado: 'estado',
     usuarioId: 'usuarioId',
     fechaRegistro: 'fechaRegistro',
-    fechaActualizacion: 'fechaActualizacion'
+    fechaActualizacion: 'fechaActualizacion',
+    inboundChannelId: 'inboundChannelId',
+    inboundMetadata: 'inboundMetadata'
   };
 
   export type RegistroScalarFieldEnum = (typeof RegistroScalarFieldEnum)[keyof typeof RegistroScalarFieldEnum]
@@ -4488,6 +5877,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -4556,6 +5953,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'InboundChannelType'
+   */
+  export type EnumInboundChannelTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboundChannelType'>
+    
+
+
+  /**
+   * Reference to a field of type 'InboundChannelType[]'
+   */
+  export type ListEnumInboundChannelTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboundChannelType[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Prioridad'
    */
   export type EnumPrioridadFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Prioridad'>
@@ -4570,20 +5981,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'EstadoRegistro'
-   */
-  export type EnumEstadoRegistroFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoRegistro'>
-    
-
-
-  /**
-   * Reference to a field of type 'EstadoRegistro[]'
-   */
-  export type ListEnumEstadoRegistroFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoRegistro[]'>
-    
-
-
-  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4594,6 +5991,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'EstadoRegistro'
+   */
+  export type EnumEstadoRegistroFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoRegistro'>
+    
+
+
+  /**
+   * Reference to a field of type 'EstadoRegistro[]'
+   */
+  export type ListEnumEstadoRegistroFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoRegistro[]'>
     
 
 
@@ -4618,12 +6029,13 @@ export namespace Prisma {
     AND?: PlantillaWhereInput | PlantillaWhereInput[]
     OR?: PlantillaWhereInput[]
     NOT?: PlantillaWhereInput | PlantillaWhereInput[]
-    id?: StringFilter<"Plantilla"> | string
+    id?: UuidFilter<"Plantilla"> | string
     nombre?: StringFilter<"Plantilla"> | string
     descripcion?: StringNullableFilter<"Plantilla"> | string | null
     esDefault?: BoolFilter<"Plantilla"> | boolean
     campos?: JsonFilter<"Plantilla">
     registros?: RegistroListRelationFilter
+    inboundChannels?: InboundChannelListRelationFilter
   }
 
   export type PlantillaOrderByWithRelationInput = {
@@ -4633,6 +6045,7 @@ export namespace Prisma {
     esDefault?: SortOrder
     campos?: SortOrder
     registros?: RegistroOrderByRelationAggregateInput
+    inboundChannels?: InboundChannelOrderByRelationAggregateInput
   }
 
   export type PlantillaWhereUniqueInput = Prisma.AtLeast<{
@@ -4645,6 +6058,7 @@ export namespace Prisma {
     esDefault?: BoolFilter<"Plantilla"> | boolean
     campos?: JsonFilter<"Plantilla">
     registros?: RegistroListRelationFilter
+    inboundChannels?: InboundChannelListRelationFilter
   }, "id" | "nombre">
 
   export type PlantillaOrderByWithAggregationInput = {
@@ -4662,29 +6076,115 @@ export namespace Prisma {
     AND?: PlantillaScalarWhereWithAggregatesInput | PlantillaScalarWhereWithAggregatesInput[]
     OR?: PlantillaScalarWhereWithAggregatesInput[]
     NOT?: PlantillaScalarWhereWithAggregatesInput | PlantillaScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Plantilla"> | string
+    id?: UuidWithAggregatesFilter<"Plantilla"> | string
     nombre?: StringWithAggregatesFilter<"Plantilla"> | string
     descripcion?: StringNullableWithAggregatesFilter<"Plantilla"> | string | null
     esDefault?: BoolWithAggregatesFilter<"Plantilla"> | boolean
     campos?: JsonWithAggregatesFilter<"Plantilla">
   }
 
+  export type InboundChannelWhereInput = {
+    AND?: InboundChannelWhereInput | InboundChannelWhereInput[]
+    OR?: InboundChannelWhereInput[]
+    NOT?: InboundChannelWhereInput | InboundChannelWhereInput[]
+    id?: UuidFilter<"InboundChannel"> | string
+    name?: StringFilter<"InboundChannel"> | string
+    channelType?: EnumInboundChannelTypeFilter<"InboundChannel"> | $Enums.InboundChannelType
+    tokenHash?: StringFilter<"InboundChannel"> | string
+    templateId?: UuidFilter<"InboundChannel"> | string
+    defaultPriority?: EnumPrioridadFilter<"InboundChannel"> | $Enums.Prioridad
+    isActive?: BoolFilter<"InboundChannel"> | boolean
+    metadata?: JsonFilter<"InboundChannel">
+    creadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+    actualizadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+    template?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
+    registros?: RegistroListRelationFilter
+  }
+
+  export type InboundChannelOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    channelType?: SortOrder
+    tokenHash?: SortOrder
+    templateId?: SortOrder
+    defaultPriority?: SortOrder
+    isActive?: SortOrder
+    metadata?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+    template?: PlantillaOrderByWithRelationInput
+    registros?: RegistroOrderByRelationAggregateInput
+  }
+
+  export type InboundChannelWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tokenHash?: string
+    AND?: InboundChannelWhereInput | InboundChannelWhereInput[]
+    OR?: InboundChannelWhereInput[]
+    NOT?: InboundChannelWhereInput | InboundChannelWhereInput[]
+    name?: StringFilter<"InboundChannel"> | string
+    channelType?: EnumInboundChannelTypeFilter<"InboundChannel"> | $Enums.InboundChannelType
+    templateId?: UuidFilter<"InboundChannel"> | string
+    defaultPriority?: EnumPrioridadFilter<"InboundChannel"> | $Enums.Prioridad
+    isActive?: BoolFilter<"InboundChannel"> | boolean
+    metadata?: JsonFilter<"InboundChannel">
+    creadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+    actualizadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+    template?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
+    registros?: RegistroListRelationFilter
+  }, "id" | "tokenHash">
+
+  export type InboundChannelOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    channelType?: SortOrder
+    tokenHash?: SortOrder
+    templateId?: SortOrder
+    defaultPriority?: SortOrder
+    isActive?: SortOrder
+    metadata?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+    _count?: InboundChannelCountOrderByAggregateInput
+    _max?: InboundChannelMaxOrderByAggregateInput
+    _min?: InboundChannelMinOrderByAggregateInput
+  }
+
+  export type InboundChannelScalarWhereWithAggregatesInput = {
+    AND?: InboundChannelScalarWhereWithAggregatesInput | InboundChannelScalarWhereWithAggregatesInput[]
+    OR?: InboundChannelScalarWhereWithAggregatesInput[]
+    NOT?: InboundChannelScalarWhereWithAggregatesInput | InboundChannelScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"InboundChannel"> | string
+    name?: StringWithAggregatesFilter<"InboundChannel"> | string
+    channelType?: EnumInboundChannelTypeWithAggregatesFilter<"InboundChannel"> | $Enums.InboundChannelType
+    tokenHash?: StringWithAggregatesFilter<"InboundChannel"> | string
+    templateId?: UuidWithAggregatesFilter<"InboundChannel"> | string
+    defaultPriority?: EnumPrioridadWithAggregatesFilter<"InboundChannel"> | $Enums.Prioridad
+    isActive?: BoolWithAggregatesFilter<"InboundChannel"> | boolean
+    metadata?: JsonWithAggregatesFilter<"InboundChannel">
+    creadoEn?: DateTimeWithAggregatesFilter<"InboundChannel"> | Date | string
+    actualizadoEn?: DateTimeWithAggregatesFilter<"InboundChannel"> | Date | string
+  }
+
   export type RegistroWhereInput = {
     AND?: RegistroWhereInput | RegistroWhereInput[]
     OR?: RegistroWhereInput[]
     NOT?: RegistroWhereInput | RegistroWhereInput[]
-    id?: StringFilter<"Registro"> | string
+    id?: UuidFilter<"Registro"> | string
     nombreCliente?: StringFilter<"Registro"> | string
     contacto?: StringNullableFilter<"Registro"> | string | null
-    plantillaId?: StringFilter<"Registro"> | string
+    plantillaId?: UuidFilter<"Registro"> | string
     especificaciones?: JsonFilter<"Registro">
     prioridad?: EnumPrioridadFilter<"Registro"> | $Enums.Prioridad
     estado?: EnumEstadoRegistroFilter<"Registro"> | $Enums.EstadoRegistro
-    usuarioId?: StringFilter<"Registro"> | string
+    usuarioId?: UuidFilter<"Registro"> | string
     fechaRegistro?: DateTimeFilter<"Registro"> | Date | string
     fechaActualizacion?: DateTimeFilter<"Registro"> | Date | string
+    inboundChannelId?: UuidNullableFilter<"Registro"> | string | null
+    inboundMetadata?: JsonNullableFilter<"Registro">
     plantilla?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
     auditoria?: AuditEventListRelationFilter
+    inboundChannel?: XOR<InboundChannelNullableScalarRelationFilter, InboundChannelWhereInput> | null
   }
 
   export type RegistroOrderByWithRelationInput = {
@@ -4698,8 +6198,11 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fechaRegistro?: SortOrder
     fechaActualizacion?: SortOrder
+    inboundChannelId?: SortOrderInput | SortOrder
+    inboundMetadata?: SortOrderInput | SortOrder
     plantilla?: PlantillaOrderByWithRelationInput
     auditoria?: AuditEventOrderByRelationAggregateInput
+    inboundChannel?: InboundChannelOrderByWithRelationInput
   }
 
   export type RegistroWhereUniqueInput = Prisma.AtLeast<{
@@ -4709,15 +6212,18 @@ export namespace Prisma {
     NOT?: RegistroWhereInput | RegistroWhereInput[]
     nombreCliente?: StringFilter<"Registro"> | string
     contacto?: StringNullableFilter<"Registro"> | string | null
-    plantillaId?: StringFilter<"Registro"> | string
+    plantillaId?: UuidFilter<"Registro"> | string
     especificaciones?: JsonFilter<"Registro">
     prioridad?: EnumPrioridadFilter<"Registro"> | $Enums.Prioridad
     estado?: EnumEstadoRegistroFilter<"Registro"> | $Enums.EstadoRegistro
-    usuarioId?: StringFilter<"Registro"> | string
+    usuarioId?: UuidFilter<"Registro"> | string
     fechaRegistro?: DateTimeFilter<"Registro"> | Date | string
     fechaActualizacion?: DateTimeFilter<"Registro"> | Date | string
+    inboundChannelId?: UuidNullableFilter<"Registro"> | string | null
+    inboundMetadata?: JsonNullableFilter<"Registro">
     plantilla?: XOR<PlantillaScalarRelationFilter, PlantillaWhereInput>
     auditoria?: AuditEventListRelationFilter
+    inboundChannel?: XOR<InboundChannelNullableScalarRelationFilter, InboundChannelWhereInput> | null
   }, "id">
 
   export type RegistroOrderByWithAggregationInput = {
@@ -4731,6 +6237,8 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fechaRegistro?: SortOrder
     fechaActualizacion?: SortOrder
+    inboundChannelId?: SortOrderInput | SortOrder
+    inboundMetadata?: SortOrderInput | SortOrder
     _count?: RegistroCountOrderByAggregateInput
     _max?: RegistroMaxOrderByAggregateInput
     _min?: RegistroMinOrderByAggregateInput
@@ -4740,25 +6248,27 @@ export namespace Prisma {
     AND?: RegistroScalarWhereWithAggregatesInput | RegistroScalarWhereWithAggregatesInput[]
     OR?: RegistroScalarWhereWithAggregatesInput[]
     NOT?: RegistroScalarWhereWithAggregatesInput | RegistroScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Registro"> | string
+    id?: UuidWithAggregatesFilter<"Registro"> | string
     nombreCliente?: StringWithAggregatesFilter<"Registro"> | string
     contacto?: StringNullableWithAggregatesFilter<"Registro"> | string | null
-    plantillaId?: StringWithAggregatesFilter<"Registro"> | string
+    plantillaId?: UuidWithAggregatesFilter<"Registro"> | string
     especificaciones?: JsonWithAggregatesFilter<"Registro">
     prioridad?: EnumPrioridadWithAggregatesFilter<"Registro"> | $Enums.Prioridad
     estado?: EnumEstadoRegistroWithAggregatesFilter<"Registro"> | $Enums.EstadoRegistro
-    usuarioId?: StringWithAggregatesFilter<"Registro"> | string
+    usuarioId?: UuidWithAggregatesFilter<"Registro"> | string
     fechaRegistro?: DateTimeWithAggregatesFilter<"Registro"> | Date | string
     fechaActualizacion?: DateTimeWithAggregatesFilter<"Registro"> | Date | string
+    inboundChannelId?: UuidNullableWithAggregatesFilter<"Registro"> | string | null
+    inboundMetadata?: JsonNullableWithAggregatesFilter<"Registro">
   }
 
   export type AuditEventWhereInput = {
     AND?: AuditEventWhereInput | AuditEventWhereInput[]
     OR?: AuditEventWhereInput[]
     NOT?: AuditEventWhereInput | AuditEventWhereInput[]
-    id?: StringFilter<"AuditEvent"> | string
-    registroId?: StringFilter<"AuditEvent"> | string
-    usuarioId?: StringFilter<"AuditEvent"> | string
+    id?: UuidFilter<"AuditEvent"> | string
+    registroId?: UuidFilter<"AuditEvent"> | string
+    usuarioId?: UuidFilter<"AuditEvent"> | string
     accion?: StringFilter<"AuditEvent"> | string
     detalle?: StringFilter<"AuditEvent"> | string
     creadoEn?: DateTimeFilter<"AuditEvent"> | Date | string
@@ -4780,8 +6290,8 @@ export namespace Prisma {
     AND?: AuditEventWhereInput | AuditEventWhereInput[]
     OR?: AuditEventWhereInput[]
     NOT?: AuditEventWhereInput | AuditEventWhereInput[]
-    registroId?: StringFilter<"AuditEvent"> | string
-    usuarioId?: StringFilter<"AuditEvent"> | string
+    registroId?: UuidFilter<"AuditEvent"> | string
+    usuarioId?: UuidFilter<"AuditEvent"> | string
     accion?: StringFilter<"AuditEvent"> | string
     detalle?: StringFilter<"AuditEvent"> | string
     creadoEn?: DateTimeFilter<"AuditEvent"> | Date | string
@@ -4804,9 +6314,9 @@ export namespace Prisma {
     AND?: AuditEventScalarWhereWithAggregatesInput | AuditEventScalarWhereWithAggregatesInput[]
     OR?: AuditEventScalarWhereWithAggregatesInput[]
     NOT?: AuditEventScalarWhereWithAggregatesInput | AuditEventScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"AuditEvent"> | string
-    registroId?: StringWithAggregatesFilter<"AuditEvent"> | string
-    usuarioId?: StringWithAggregatesFilter<"AuditEvent"> | string
+    id?: UuidWithAggregatesFilter<"AuditEvent"> | string
+    registroId?: UuidWithAggregatesFilter<"AuditEvent"> | string
+    usuarioId?: UuidWithAggregatesFilter<"AuditEvent"> | string
     accion?: StringWithAggregatesFilter<"AuditEvent"> | string
     detalle?: StringWithAggregatesFilter<"AuditEvent"> | string
     creadoEn?: DateTimeWithAggregatesFilter<"AuditEvent"> | Date | string
@@ -4819,6 +6329,7 @@ export namespace Prisma {
     esDefault?: boolean
     campos: JsonNullValueInput | InputJsonValue
     registros?: RegistroCreateNestedManyWithoutPlantillaInput
+    inboundChannels?: InboundChannelCreateNestedManyWithoutTemplateInput
   }
 
   export type PlantillaUncheckedCreateInput = {
@@ -4828,6 +6339,7 @@ export namespace Prisma {
     esDefault?: boolean
     campos: JsonNullValueInput | InputJsonValue
     registros?: RegistroUncheckedCreateNestedManyWithoutPlantillaInput
+    inboundChannels?: InboundChannelUncheckedCreateNestedManyWithoutTemplateInput
   }
 
   export type PlantillaUpdateInput = {
@@ -4837,6 +6349,7 @@ export namespace Prisma {
     esDefault?: BoolFieldUpdateOperationsInput | boolean
     campos?: JsonNullValueInput | InputJsonValue
     registros?: RegistroUpdateManyWithoutPlantillaNestedInput
+    inboundChannels?: InboundChannelUpdateManyWithoutTemplateNestedInput
   }
 
   export type PlantillaUncheckedUpdateInput = {
@@ -4846,6 +6359,7 @@ export namespace Prisma {
     esDefault?: BoolFieldUpdateOperationsInput | boolean
     campos?: JsonNullValueInput | InputJsonValue
     registros?: RegistroUncheckedUpdateManyWithoutPlantillaNestedInput
+    inboundChannels?: InboundChannelUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
   export type PlantillaCreateManyInput = {
@@ -4872,6 +6386,100 @@ export namespace Prisma {
     campos?: JsonNullValueInput | InputJsonValue
   }
 
+  export type InboundChannelCreateInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    template: PlantillaCreateNestedOneWithoutInboundChannelsInput
+    registros?: RegistroCreateNestedManyWithoutInboundChannelInput
+  }
+
+  export type InboundChannelUncheckedCreateInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    templateId: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    registros?: RegistroUncheckedCreateNestedManyWithoutInboundChannelInput
+  }
+
+  export type InboundChannelUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    template?: PlantillaUpdateOneRequiredWithoutInboundChannelsNestedInput
+    registros?: RegistroUpdateManyWithoutInboundChannelNestedInput
+  }
+
+  export type InboundChannelUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: RegistroUncheckedUpdateManyWithoutInboundChannelNestedInput
+  }
+
+  export type InboundChannelCreateManyInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    templateId: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type InboundChannelUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type RegistroCreateInput = {
     id?: string
     nombreCliente: string
@@ -4882,8 +6490,10 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     plantilla: PlantillaCreateNestedOneWithoutRegistrosInput
     auditoria?: AuditEventCreateNestedManyWithoutRegistroInput
+    inboundChannel?: InboundChannelCreateNestedOneWithoutRegistrosInput
   }
 
   export type RegistroUncheckedCreateInput = {
@@ -4897,6 +6507,8 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundChannelId?: string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventUncheckedCreateNestedManyWithoutRegistroInput
   }
 
@@ -4910,8 +6522,10 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     plantilla?: PlantillaUpdateOneRequiredWithoutRegistrosNestedInput
     auditoria?: AuditEventUpdateManyWithoutRegistroNestedInput
+    inboundChannel?: InboundChannelUpdateOneWithoutRegistrosNestedInput
   }
 
   export type RegistroUncheckedUpdateInput = {
@@ -4925,6 +6539,8 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundChannelId?: NullableStringFieldUpdateOperationsInput | string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventUncheckedUpdateManyWithoutRegistroNestedInput
   }
 
@@ -4939,6 +6555,8 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundChannelId?: string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RegistroUpdateManyMutationInput = {
@@ -4951,6 +6569,7 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RegistroUncheckedUpdateManyInput = {
@@ -4964,6 +6583,8 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundChannelId?: NullableStringFieldUpdateOperationsInput | string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuditEventCreateInput = {
@@ -5026,6 +6647,18 @@ export namespace Prisma {
     accion?: StringFieldUpdateOperationsInput | string
     detalle?: StringFieldUpdateOperationsInput | string
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5092,12 +6725,22 @@ export namespace Prisma {
     none?: RegistroWhereInput
   }
 
+  export type InboundChannelListRelationFilter = {
+    every?: InboundChannelWhereInput
+    some?: InboundChannelWhereInput
+    none?: InboundChannelWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type RegistroOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InboundChannelOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -5121,6 +6764,21 @@ export namespace Prisma {
     nombre?: SortOrder
     descripcion?: SortOrder
     esDefault?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -5193,18 +6851,18 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
+  export type EnumInboundChannelTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InboundChannelType | EnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInboundChannelTypeFilter<$PrismaModel> | $Enums.InboundChannelType
+  }
+
   export type EnumPrioridadFilter<$PrismaModel = never> = {
     equals?: $Enums.Prioridad | EnumPrioridadFieldRefInput<$PrismaModel>
     in?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
     notIn?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
     not?: NestedEnumPrioridadFilter<$PrismaModel> | $Enums.Prioridad
-  }
-
-  export type EnumEstadoRegistroFilter<$PrismaModel = never> = {
-    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
-    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    not?: NestedEnumEstadoRegistroFilter<$PrismaModel> | $Enums.EstadoRegistro
   }
 
   export type DateTimeFilter<$PrismaModel = never> = {
@@ -5223,10 +6881,128 @@ export namespace Prisma {
     isNot?: PlantillaWhereInput
   }
 
+  export type InboundChannelCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    channelType?: SortOrder
+    tokenHash?: SortOrder
+    templateId?: SortOrder
+    defaultPriority?: SortOrder
+    isActive?: SortOrder
+    metadata?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type InboundChannelMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    channelType?: SortOrder
+    tokenHash?: SortOrder
+    templateId?: SortOrder
+    defaultPriority?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type InboundChannelMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    channelType?: SortOrder
+    tokenHash?: SortOrder
+    templateId?: SortOrder
+    defaultPriority?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+    actualizadoEn?: SortOrder
+  }
+
+  export type EnumInboundChannelTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InboundChannelType | EnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInboundChannelTypeWithAggregatesFilter<$PrismaModel> | $Enums.InboundChannelType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInboundChannelTypeFilter<$PrismaModel>
+    _max?: NestedEnumInboundChannelTypeFilter<$PrismaModel>
+  }
+
+  export type EnumPrioridadWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Prioridad | EnumPrioridadFieldRefInput<$PrismaModel>
+    in?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
+    not?: NestedEnumPrioridadWithAggregatesFilter<$PrismaModel> | $Enums.Prioridad
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPrioridadFilter<$PrismaModel>
+    _max?: NestedEnumPrioridadFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumEstadoRegistroFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoRegistroFilter<$PrismaModel> | $Enums.EstadoRegistro
+  }
+
+  export type UuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type AuditEventListRelationFilter = {
     every?: AuditEventWhereInput
     some?: AuditEventWhereInput
     none?: AuditEventWhereInput
+  }
+
+  export type InboundChannelNullableScalarRelationFilter = {
+    is?: InboundChannelWhereInput | null
+    isNot?: InboundChannelWhereInput | null
   }
 
   export type AuditEventOrderByRelationAggregateInput = {
@@ -5244,6 +7020,8 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fechaRegistro?: SortOrder
     fechaActualizacion?: SortOrder
+    inboundChannelId?: SortOrder
+    inboundMetadata?: SortOrder
   }
 
   export type RegistroMaxOrderByAggregateInput = {
@@ -5256,6 +7034,7 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fechaRegistro?: SortOrder
     fechaActualizacion?: SortOrder
+    inboundChannelId?: SortOrder
   }
 
   export type RegistroMinOrderByAggregateInput = {
@@ -5268,16 +7047,7 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fechaRegistro?: SortOrder
     fechaActualizacion?: SortOrder
-  }
-
-  export type EnumPrioridadWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Prioridad | EnumPrioridadFieldRefInput<$PrismaModel>
-    in?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
-    not?: NestedEnumPrioridadWithAggregatesFilter<$PrismaModel> | $Enums.Prioridad
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPrioridadFilter<$PrismaModel>
-    _max?: NestedEnumPrioridadFilter<$PrismaModel>
+    inboundChannelId?: SortOrder
   }
 
   export type EnumEstadoRegistroWithAggregatesFilter<$PrismaModel = never> = {
@@ -5290,18 +7060,45 @@ export namespace Prisma {
     _max?: NestedEnumEstadoRegistroFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type RegistroScalarRelationFilter = {
@@ -5343,11 +7140,25 @@ export namespace Prisma {
     connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
   }
 
+  export type InboundChannelCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput> | InboundChannelCreateWithoutTemplateInput[] | InboundChannelUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutTemplateInput | InboundChannelCreateOrConnectWithoutTemplateInput[]
+    createMany?: InboundChannelCreateManyTemplateInputEnvelope
+    connect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+  }
+
   export type RegistroUncheckedCreateNestedManyWithoutPlantillaInput = {
     create?: XOR<RegistroCreateWithoutPlantillaInput, RegistroUncheckedCreateWithoutPlantillaInput> | RegistroCreateWithoutPlantillaInput[] | RegistroUncheckedCreateWithoutPlantillaInput[]
     connectOrCreate?: RegistroCreateOrConnectWithoutPlantillaInput | RegistroCreateOrConnectWithoutPlantillaInput[]
     createMany?: RegistroCreateManyPlantillaInputEnvelope
     connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+  }
+
+  export type InboundChannelUncheckedCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput> | InboundChannelCreateWithoutTemplateInput[] | InboundChannelUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutTemplateInput | InboundChannelCreateOrConnectWithoutTemplateInput[]
+    createMany?: InboundChannelCreateManyTemplateInputEnvelope
+    connect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -5376,6 +7187,20 @@ export namespace Prisma {
     deleteMany?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
   }
 
+  export type InboundChannelUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput> | InboundChannelCreateWithoutTemplateInput[] | InboundChannelUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutTemplateInput | InboundChannelCreateOrConnectWithoutTemplateInput[]
+    upsert?: InboundChannelUpsertWithWhereUniqueWithoutTemplateInput | InboundChannelUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: InboundChannelCreateManyTemplateInputEnvelope
+    set?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    disconnect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    delete?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    connect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    update?: InboundChannelUpdateWithWhereUniqueWithoutTemplateInput | InboundChannelUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: InboundChannelUpdateManyWithWhereWithoutTemplateInput | InboundChannelUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: InboundChannelScalarWhereInput | InboundChannelScalarWhereInput[]
+  }
+
   export type RegistroUncheckedUpdateManyWithoutPlantillaNestedInput = {
     create?: XOR<RegistroCreateWithoutPlantillaInput, RegistroUncheckedCreateWithoutPlantillaInput> | RegistroCreateWithoutPlantillaInput[] | RegistroUncheckedCreateWithoutPlantillaInput[]
     connectOrCreate?: RegistroCreateOrConnectWithoutPlantillaInput | RegistroCreateOrConnectWithoutPlantillaInput[]
@@ -5387,6 +7212,88 @@ export namespace Prisma {
     connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
     update?: RegistroUpdateWithWhereUniqueWithoutPlantillaInput | RegistroUpdateWithWhereUniqueWithoutPlantillaInput[]
     updateMany?: RegistroUpdateManyWithWhereWithoutPlantillaInput | RegistroUpdateManyWithWhereWithoutPlantillaInput[]
+    deleteMany?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
+  }
+
+  export type InboundChannelUncheckedUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput> | InboundChannelCreateWithoutTemplateInput[] | InboundChannelUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutTemplateInput | InboundChannelCreateOrConnectWithoutTemplateInput[]
+    upsert?: InboundChannelUpsertWithWhereUniqueWithoutTemplateInput | InboundChannelUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: InboundChannelCreateManyTemplateInputEnvelope
+    set?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    disconnect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    delete?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    connect?: InboundChannelWhereUniqueInput | InboundChannelWhereUniqueInput[]
+    update?: InboundChannelUpdateWithWhereUniqueWithoutTemplateInput | InboundChannelUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: InboundChannelUpdateManyWithWhereWithoutTemplateInput | InboundChannelUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: InboundChannelScalarWhereInput | InboundChannelScalarWhereInput[]
+  }
+
+  export type PlantillaCreateNestedOneWithoutInboundChannelsInput = {
+    create?: XOR<PlantillaCreateWithoutInboundChannelsInput, PlantillaUncheckedCreateWithoutInboundChannelsInput>
+    connectOrCreate?: PlantillaCreateOrConnectWithoutInboundChannelsInput
+    connect?: PlantillaWhereUniqueInput
+  }
+
+  export type RegistroCreateNestedManyWithoutInboundChannelInput = {
+    create?: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput> | RegistroCreateWithoutInboundChannelInput[] | RegistroUncheckedCreateWithoutInboundChannelInput[]
+    connectOrCreate?: RegistroCreateOrConnectWithoutInboundChannelInput | RegistroCreateOrConnectWithoutInboundChannelInput[]
+    createMany?: RegistroCreateManyInboundChannelInputEnvelope
+    connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+  }
+
+  export type RegistroUncheckedCreateNestedManyWithoutInboundChannelInput = {
+    create?: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput> | RegistroCreateWithoutInboundChannelInput[] | RegistroUncheckedCreateWithoutInboundChannelInput[]
+    connectOrCreate?: RegistroCreateOrConnectWithoutInboundChannelInput | RegistroCreateOrConnectWithoutInboundChannelInput[]
+    createMany?: RegistroCreateManyInboundChannelInputEnvelope
+    connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+  }
+
+  export type EnumInboundChannelTypeFieldUpdateOperationsInput = {
+    set?: $Enums.InboundChannelType
+  }
+
+  export type EnumPrioridadFieldUpdateOperationsInput = {
+    set?: $Enums.Prioridad
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type PlantillaUpdateOneRequiredWithoutInboundChannelsNestedInput = {
+    create?: XOR<PlantillaCreateWithoutInboundChannelsInput, PlantillaUncheckedCreateWithoutInboundChannelsInput>
+    connectOrCreate?: PlantillaCreateOrConnectWithoutInboundChannelsInput
+    upsert?: PlantillaUpsertWithoutInboundChannelsInput
+    connect?: PlantillaWhereUniqueInput
+    update?: XOR<XOR<PlantillaUpdateToOneWithWhereWithoutInboundChannelsInput, PlantillaUpdateWithoutInboundChannelsInput>, PlantillaUncheckedUpdateWithoutInboundChannelsInput>
+  }
+
+  export type RegistroUpdateManyWithoutInboundChannelNestedInput = {
+    create?: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput> | RegistroCreateWithoutInboundChannelInput[] | RegistroUncheckedCreateWithoutInboundChannelInput[]
+    connectOrCreate?: RegistroCreateOrConnectWithoutInboundChannelInput | RegistroCreateOrConnectWithoutInboundChannelInput[]
+    upsert?: RegistroUpsertWithWhereUniqueWithoutInboundChannelInput | RegistroUpsertWithWhereUniqueWithoutInboundChannelInput[]
+    createMany?: RegistroCreateManyInboundChannelInputEnvelope
+    set?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    disconnect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    delete?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    update?: RegistroUpdateWithWhereUniqueWithoutInboundChannelInput | RegistroUpdateWithWhereUniqueWithoutInboundChannelInput[]
+    updateMany?: RegistroUpdateManyWithWhereWithoutInboundChannelInput | RegistroUpdateManyWithWhereWithoutInboundChannelInput[]
+    deleteMany?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
+  }
+
+  export type RegistroUncheckedUpdateManyWithoutInboundChannelNestedInput = {
+    create?: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput> | RegistroCreateWithoutInboundChannelInput[] | RegistroUncheckedCreateWithoutInboundChannelInput[]
+    connectOrCreate?: RegistroCreateOrConnectWithoutInboundChannelInput | RegistroCreateOrConnectWithoutInboundChannelInput[]
+    upsert?: RegistroUpsertWithWhereUniqueWithoutInboundChannelInput | RegistroUpsertWithWhereUniqueWithoutInboundChannelInput[]
+    createMany?: RegistroCreateManyInboundChannelInputEnvelope
+    set?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    disconnect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    delete?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    connect?: RegistroWhereUniqueInput | RegistroWhereUniqueInput[]
+    update?: RegistroUpdateWithWhereUniqueWithoutInboundChannelInput | RegistroUpdateWithWhereUniqueWithoutInboundChannelInput[]
+    updateMany?: RegistroUpdateManyWithWhereWithoutInboundChannelInput | RegistroUpdateManyWithWhereWithoutInboundChannelInput[]
     deleteMany?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
   }
 
@@ -5403,6 +7310,12 @@ export namespace Prisma {
     connect?: AuditEventWhereUniqueInput | AuditEventWhereUniqueInput[]
   }
 
+  export type InboundChannelCreateNestedOneWithoutRegistrosInput = {
+    create?: XOR<InboundChannelCreateWithoutRegistrosInput, InboundChannelUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutRegistrosInput
+    connect?: InboundChannelWhereUniqueInput
+  }
+
   export type AuditEventUncheckedCreateNestedManyWithoutRegistroInput = {
     create?: XOR<AuditEventCreateWithoutRegistroInput, AuditEventUncheckedCreateWithoutRegistroInput> | AuditEventCreateWithoutRegistroInput[] | AuditEventUncheckedCreateWithoutRegistroInput[]
     connectOrCreate?: AuditEventCreateOrConnectWithoutRegistroInput | AuditEventCreateOrConnectWithoutRegistroInput[]
@@ -5410,16 +7323,8 @@ export namespace Prisma {
     connect?: AuditEventWhereUniqueInput | AuditEventWhereUniqueInput[]
   }
 
-  export type EnumPrioridadFieldUpdateOperationsInput = {
-    set?: $Enums.Prioridad
-  }
-
   export type EnumEstadoRegistroFieldUpdateOperationsInput = {
     set?: $Enums.EstadoRegistro
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
   }
 
   export type PlantillaUpdateOneRequiredWithoutRegistrosNestedInput = {
@@ -5442,6 +7347,16 @@ export namespace Prisma {
     update?: AuditEventUpdateWithWhereUniqueWithoutRegistroInput | AuditEventUpdateWithWhereUniqueWithoutRegistroInput[]
     updateMany?: AuditEventUpdateManyWithWhereWithoutRegistroInput | AuditEventUpdateManyWithWhereWithoutRegistroInput[]
     deleteMany?: AuditEventScalarWhereInput | AuditEventScalarWhereInput[]
+  }
+
+  export type InboundChannelUpdateOneWithoutRegistrosNestedInput = {
+    create?: XOR<InboundChannelCreateWithoutRegistrosInput, InboundChannelUncheckedCreateWithoutRegistrosInput>
+    connectOrCreate?: InboundChannelCreateOrConnectWithoutRegistrosInput
+    upsert?: InboundChannelUpsertWithoutRegistrosInput
+    disconnect?: InboundChannelWhereInput | boolean
+    delete?: InboundChannelWhereInput | boolean
+    connect?: InboundChannelWhereUniqueInput
+    update?: XOR<XOR<InboundChannelUpdateToOneWithWhereWithoutRegistrosInput, InboundChannelUpdateWithoutRegistrosInput>, InboundChannelUncheckedUpdateWithoutRegistrosInput>
   }
 
   export type AuditEventUncheckedUpdateManyWithoutRegistroNestedInput = {
@@ -5470,6 +7385,17 @@ export namespace Prisma {
     upsert?: RegistroUpsertWithoutAuditoriaInput
     connect?: RegistroWhereUniqueInput
     update?: XOR<XOR<RegistroUpdateToOneWithWhereWithoutAuditoriaInput, RegistroUpdateWithoutAuditoriaInput>, RegistroUncheckedUpdateWithoutAuditoriaInput>
+  }
+
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5505,6 +7431,31 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5520,17 +7471,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5592,18 +7532,18 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedEnumInboundChannelTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InboundChannelType | EnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInboundChannelTypeFilter<$PrismaModel> | $Enums.InboundChannelType
+  }
+
   export type NestedEnumPrioridadFilter<$PrismaModel = never> = {
     equals?: $Enums.Prioridad | EnumPrioridadFieldRefInput<$PrismaModel>
     in?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
     notIn?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
     not?: NestedEnumPrioridadFilter<$PrismaModel> | $Enums.Prioridad
-  }
-
-  export type NestedEnumEstadoRegistroFilter<$PrismaModel = never> = {
-    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
-    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    not?: NestedEnumEstadoRegistroFilter<$PrismaModel> | $Enums.EstadoRegistro
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -5617,6 +7557,16 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedEnumInboundChannelTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InboundChannelType | EnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.InboundChannelType[] | ListEnumInboundChannelTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumInboundChannelTypeWithAggregatesFilter<$PrismaModel> | $Enums.InboundChannelType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInboundChannelTypeFilter<$PrismaModel>
+    _max?: NestedEnumInboundChannelTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumPrioridadWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Prioridad | EnumPrioridadFieldRefInput<$PrismaModel>
     in?: $Enums.Prioridad[] | ListEnumPrioridadFieldRefInput<$PrismaModel>
@@ -5625,16 +7575,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPrioridadFilter<$PrismaModel>
     _max?: NestedEnumPrioridadFilter<$PrismaModel>
-  }
-
-  export type NestedEnumEstadoRegistroWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
-    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
-    not?: NestedEnumEstadoRegistroWithAggregatesFilter<$PrismaModel> | $Enums.EstadoRegistro
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumEstadoRegistroFilter<$PrismaModel>
-    _max?: NestedEnumEstadoRegistroFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -5651,6 +7591,71 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumEstadoRegistroFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoRegistroFilter<$PrismaModel> | $Enums.EstadoRegistro
+  }
+
+  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedEnumEstadoRegistroWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoRegistro | EnumEstadoRegistroFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EstadoRegistro[] | ListEnumEstadoRegistroFieldRefInput<$PrismaModel>
+    not?: NestedEnumEstadoRegistroWithAggregatesFilter<$PrismaModel> | $Enums.EstadoRegistro
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEstadoRegistroFilter<$PrismaModel>
+    _max?: NestedEnumEstadoRegistroFilter<$PrismaModel>
+  }
+
+  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
   export type RegistroCreateWithoutPlantillaInput = {
     id?: string
     nombreCliente: string
@@ -5661,7 +7666,9 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventCreateNestedManyWithoutRegistroInput
+    inboundChannel?: InboundChannelCreateNestedOneWithoutRegistrosInput
   }
 
   export type RegistroUncheckedCreateWithoutPlantillaInput = {
@@ -5674,6 +7681,8 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundChannelId?: string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventUncheckedCreateNestedManyWithoutRegistroInput
   }
 
@@ -5684,6 +7693,42 @@ export namespace Prisma {
 
   export type RegistroCreateManyPlantillaInputEnvelope = {
     data: RegistroCreateManyPlantillaInput | RegistroCreateManyPlantillaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InboundChannelCreateWithoutTemplateInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    registros?: RegistroCreateNestedManyWithoutInboundChannelInput
+  }
+
+  export type InboundChannelUncheckedCreateWithoutTemplateInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    registros?: RegistroUncheckedCreateNestedManyWithoutInboundChannelInput
+  }
+
+  export type InboundChannelCreateOrConnectWithoutTemplateInput = {
+    where: InboundChannelWhereUniqueInput
+    create: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type InboundChannelCreateManyTemplateInputEnvelope = {
+    data: InboundChannelCreateManyTemplateInput | InboundChannelCreateManyTemplateInput[]
     skipDuplicates?: boolean
   }
 
@@ -5707,16 +7752,158 @@ export namespace Prisma {
     AND?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
     OR?: RegistroScalarWhereInput[]
     NOT?: RegistroScalarWhereInput | RegistroScalarWhereInput[]
-    id?: StringFilter<"Registro"> | string
+    id?: UuidFilter<"Registro"> | string
     nombreCliente?: StringFilter<"Registro"> | string
     contacto?: StringNullableFilter<"Registro"> | string | null
-    plantillaId?: StringFilter<"Registro"> | string
+    plantillaId?: UuidFilter<"Registro"> | string
     especificaciones?: JsonFilter<"Registro">
     prioridad?: EnumPrioridadFilter<"Registro"> | $Enums.Prioridad
     estado?: EnumEstadoRegistroFilter<"Registro"> | $Enums.EstadoRegistro
-    usuarioId?: StringFilter<"Registro"> | string
+    usuarioId?: UuidFilter<"Registro"> | string
     fechaRegistro?: DateTimeFilter<"Registro"> | Date | string
     fechaActualizacion?: DateTimeFilter<"Registro"> | Date | string
+    inboundChannelId?: UuidNullableFilter<"Registro"> | string | null
+    inboundMetadata?: JsonNullableFilter<"Registro">
+  }
+
+  export type InboundChannelUpsertWithWhereUniqueWithoutTemplateInput = {
+    where: InboundChannelWhereUniqueInput
+    update: XOR<InboundChannelUpdateWithoutTemplateInput, InboundChannelUncheckedUpdateWithoutTemplateInput>
+    create: XOR<InboundChannelCreateWithoutTemplateInput, InboundChannelUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type InboundChannelUpdateWithWhereUniqueWithoutTemplateInput = {
+    where: InboundChannelWhereUniqueInput
+    data: XOR<InboundChannelUpdateWithoutTemplateInput, InboundChannelUncheckedUpdateWithoutTemplateInput>
+  }
+
+  export type InboundChannelUpdateManyWithWhereWithoutTemplateInput = {
+    where: InboundChannelScalarWhereInput
+    data: XOR<InboundChannelUpdateManyMutationInput, InboundChannelUncheckedUpdateManyWithoutTemplateInput>
+  }
+
+  export type InboundChannelScalarWhereInput = {
+    AND?: InboundChannelScalarWhereInput | InboundChannelScalarWhereInput[]
+    OR?: InboundChannelScalarWhereInput[]
+    NOT?: InboundChannelScalarWhereInput | InboundChannelScalarWhereInput[]
+    id?: UuidFilter<"InboundChannel"> | string
+    name?: StringFilter<"InboundChannel"> | string
+    channelType?: EnumInboundChannelTypeFilter<"InboundChannel"> | $Enums.InboundChannelType
+    tokenHash?: StringFilter<"InboundChannel"> | string
+    templateId?: UuidFilter<"InboundChannel"> | string
+    defaultPriority?: EnumPrioridadFilter<"InboundChannel"> | $Enums.Prioridad
+    isActive?: BoolFilter<"InboundChannel"> | boolean
+    metadata?: JsonFilter<"InboundChannel">
+    creadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+    actualizadoEn?: DateTimeFilter<"InboundChannel"> | Date | string
+  }
+
+  export type PlantillaCreateWithoutInboundChannelsInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    esDefault?: boolean
+    campos: JsonNullValueInput | InputJsonValue
+    registros?: RegistroCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type PlantillaUncheckedCreateWithoutInboundChannelsInput = {
+    id?: string
+    nombre: string
+    descripcion?: string | null
+    esDefault?: boolean
+    campos: JsonNullValueInput | InputJsonValue
+    registros?: RegistroUncheckedCreateNestedManyWithoutPlantillaInput
+  }
+
+  export type PlantillaCreateOrConnectWithoutInboundChannelsInput = {
+    where: PlantillaWhereUniqueInput
+    create: XOR<PlantillaCreateWithoutInboundChannelsInput, PlantillaUncheckedCreateWithoutInboundChannelsInput>
+  }
+
+  export type RegistroCreateWithoutInboundChannelInput = {
+    id?: string
+    nombreCliente: string
+    contacto?: string | null
+    especificaciones: JsonNullValueInput | InputJsonValue
+    prioridad?: $Enums.Prioridad
+    estado?: $Enums.EstadoRegistro
+    usuarioId: string
+    fechaRegistro?: Date | string
+    fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+    plantilla: PlantillaCreateNestedOneWithoutRegistrosInput
+    auditoria?: AuditEventCreateNestedManyWithoutRegistroInput
+  }
+
+  export type RegistroUncheckedCreateWithoutInboundChannelInput = {
+    id?: string
+    nombreCliente: string
+    contacto?: string | null
+    plantillaId: string
+    especificaciones: JsonNullValueInput | InputJsonValue
+    prioridad?: $Enums.Prioridad
+    estado?: $Enums.EstadoRegistro
+    usuarioId: string
+    fechaRegistro?: Date | string
+    fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+    auditoria?: AuditEventUncheckedCreateNestedManyWithoutRegistroInput
+  }
+
+  export type RegistroCreateOrConnectWithoutInboundChannelInput = {
+    where: RegistroWhereUniqueInput
+    create: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput>
+  }
+
+  export type RegistroCreateManyInboundChannelInputEnvelope = {
+    data: RegistroCreateManyInboundChannelInput | RegistroCreateManyInboundChannelInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlantillaUpsertWithoutInboundChannelsInput = {
+    update: XOR<PlantillaUpdateWithoutInboundChannelsInput, PlantillaUncheckedUpdateWithoutInboundChannelsInput>
+    create: XOR<PlantillaCreateWithoutInboundChannelsInput, PlantillaUncheckedCreateWithoutInboundChannelsInput>
+    where?: PlantillaWhereInput
+  }
+
+  export type PlantillaUpdateToOneWithWhereWithoutInboundChannelsInput = {
+    where?: PlantillaWhereInput
+    data: XOR<PlantillaUpdateWithoutInboundChannelsInput, PlantillaUncheckedUpdateWithoutInboundChannelsInput>
+  }
+
+  export type PlantillaUpdateWithoutInboundChannelsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    esDefault?: BoolFieldUpdateOperationsInput | boolean
+    campos?: JsonNullValueInput | InputJsonValue
+    registros?: RegistroUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type PlantillaUncheckedUpdateWithoutInboundChannelsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    descripcion?: NullableStringFieldUpdateOperationsInput | string | null
+    esDefault?: BoolFieldUpdateOperationsInput | boolean
+    campos?: JsonNullValueInput | InputJsonValue
+    registros?: RegistroUncheckedUpdateManyWithoutPlantillaNestedInput
+  }
+
+  export type RegistroUpsertWithWhereUniqueWithoutInboundChannelInput = {
+    where: RegistroWhereUniqueInput
+    update: XOR<RegistroUpdateWithoutInboundChannelInput, RegistroUncheckedUpdateWithoutInboundChannelInput>
+    create: XOR<RegistroCreateWithoutInboundChannelInput, RegistroUncheckedCreateWithoutInboundChannelInput>
+  }
+
+  export type RegistroUpdateWithWhereUniqueWithoutInboundChannelInput = {
+    where: RegistroWhereUniqueInput
+    data: XOR<RegistroUpdateWithoutInboundChannelInput, RegistroUncheckedUpdateWithoutInboundChannelInput>
+  }
+
+  export type RegistroUpdateManyWithWhereWithoutInboundChannelInput = {
+    where: RegistroScalarWhereInput
+    data: XOR<RegistroUpdateManyMutationInput, RegistroUncheckedUpdateManyWithoutInboundChannelInput>
   }
 
   export type PlantillaCreateWithoutRegistrosInput = {
@@ -5725,6 +7912,7 @@ export namespace Prisma {
     descripcion?: string | null
     esDefault?: boolean
     campos: JsonNullValueInput | InputJsonValue
+    inboundChannels?: InboundChannelCreateNestedManyWithoutTemplateInput
   }
 
   export type PlantillaUncheckedCreateWithoutRegistrosInput = {
@@ -5733,6 +7921,7 @@ export namespace Prisma {
     descripcion?: string | null
     esDefault?: boolean
     campos: JsonNullValueInput | InputJsonValue
+    inboundChannels?: InboundChannelUncheckedCreateNestedManyWithoutTemplateInput
   }
 
   export type PlantillaCreateOrConnectWithoutRegistrosInput = {
@@ -5766,6 +7955,37 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InboundChannelCreateWithoutRegistrosInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+    template: PlantillaCreateNestedOneWithoutInboundChannelsInput
+  }
+
+  export type InboundChannelUncheckedCreateWithoutRegistrosInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    templateId: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
+  }
+
+  export type InboundChannelCreateOrConnectWithoutRegistrosInput = {
+    where: InboundChannelWhereUniqueInput
+    create: XOR<InboundChannelCreateWithoutRegistrosInput, InboundChannelUncheckedCreateWithoutRegistrosInput>
+  }
+
   export type PlantillaUpsertWithoutRegistrosInput = {
     update: XOR<PlantillaUpdateWithoutRegistrosInput, PlantillaUncheckedUpdateWithoutRegistrosInput>
     create: XOR<PlantillaCreateWithoutRegistrosInput, PlantillaUncheckedCreateWithoutRegistrosInput>
@@ -5783,6 +8003,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     esDefault?: BoolFieldUpdateOperationsInput | boolean
     campos?: JsonNullValueInput | InputJsonValue
+    inboundChannels?: InboundChannelUpdateManyWithoutTemplateNestedInput
   }
 
   export type PlantillaUncheckedUpdateWithoutRegistrosInput = {
@@ -5791,6 +8012,7 @@ export namespace Prisma {
     descripcion?: NullableStringFieldUpdateOperationsInput | string | null
     esDefault?: BoolFieldUpdateOperationsInput | boolean
     campos?: JsonNullValueInput | InputJsonValue
+    inboundChannels?: InboundChannelUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
   export type AuditEventUpsertWithWhereUniqueWithoutRegistroInput = {
@@ -5813,12 +8035,49 @@ export namespace Prisma {
     AND?: AuditEventScalarWhereInput | AuditEventScalarWhereInput[]
     OR?: AuditEventScalarWhereInput[]
     NOT?: AuditEventScalarWhereInput | AuditEventScalarWhereInput[]
-    id?: StringFilter<"AuditEvent"> | string
-    registroId?: StringFilter<"AuditEvent"> | string
-    usuarioId?: StringFilter<"AuditEvent"> | string
+    id?: UuidFilter<"AuditEvent"> | string
+    registroId?: UuidFilter<"AuditEvent"> | string
+    usuarioId?: UuidFilter<"AuditEvent"> | string
     accion?: StringFilter<"AuditEvent"> | string
     detalle?: StringFilter<"AuditEvent"> | string
     creadoEn?: DateTimeFilter<"AuditEvent"> | Date | string
+  }
+
+  export type InboundChannelUpsertWithoutRegistrosInput = {
+    update: XOR<InboundChannelUpdateWithoutRegistrosInput, InboundChannelUncheckedUpdateWithoutRegistrosInput>
+    create: XOR<InboundChannelCreateWithoutRegistrosInput, InboundChannelUncheckedCreateWithoutRegistrosInput>
+    where?: InboundChannelWhereInput
+  }
+
+  export type InboundChannelUpdateToOneWithWhereWithoutRegistrosInput = {
+    where?: InboundChannelWhereInput
+    data: XOR<InboundChannelUpdateWithoutRegistrosInput, InboundChannelUncheckedUpdateWithoutRegistrosInput>
+  }
+
+  export type InboundChannelUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    template?: PlantillaUpdateOneRequiredWithoutInboundChannelsNestedInput
+  }
+
+  export type InboundChannelUncheckedUpdateWithoutRegistrosInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    templateId?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RegistroCreateWithoutAuditoriaInput = {
@@ -5831,7 +8090,9 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     plantilla: PlantillaCreateNestedOneWithoutRegistrosInput
+    inboundChannel?: InboundChannelCreateNestedOneWithoutRegistrosInput
   }
 
   export type RegistroUncheckedCreateWithoutAuditoriaInput = {
@@ -5845,6 +8106,8 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundChannelId?: string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RegistroCreateOrConnectWithoutAuditoriaInput = {
@@ -5873,7 +8136,9 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     plantilla?: PlantillaUpdateOneRequiredWithoutRegistrosNestedInput
+    inboundChannel?: InboundChannelUpdateOneWithoutRegistrosNestedInput
   }
 
   export type RegistroUncheckedUpdateWithoutAuditoriaInput = {
@@ -5887,6 +8152,8 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundChannelId?: NullableStringFieldUpdateOperationsInput | string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type RegistroCreateManyPlantillaInput = {
@@ -5899,6 +8166,20 @@ export namespace Prisma {
     usuarioId: string
     fechaRegistro?: Date | string
     fechaActualizacion?: Date | string
+    inboundChannelId?: string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type InboundChannelCreateManyTemplateInput = {
+    id?: string
+    name: string
+    channelType: $Enums.InboundChannelType
+    tokenHash: string
+    defaultPriority?: $Enums.Prioridad
+    isActive?: boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: Date | string
+    actualizadoEn?: Date | string
   }
 
   export type RegistroUpdateWithoutPlantillaInput = {
@@ -5911,7 +8192,9 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventUpdateManyWithoutRegistroNestedInput
+    inboundChannel?: InboundChannelUpdateOneWithoutRegistrosNestedInput
   }
 
   export type RegistroUncheckedUpdateWithoutPlantillaInput = {
@@ -5924,6 +8207,8 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundChannelId?: NullableStringFieldUpdateOperationsInput | string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
     auditoria?: AuditEventUncheckedUpdateManyWithoutRegistroNestedInput
   }
 
@@ -5937,6 +8222,104 @@ export namespace Prisma {
     usuarioId?: StringFieldUpdateOperationsInput | string
     fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
     fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundChannelId?: NullableStringFieldUpdateOperationsInput | string | null
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type InboundChannelUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: RegistroUpdateManyWithoutInboundChannelNestedInput
+  }
+
+  export type InboundChannelUncheckedUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    registros?: RegistroUncheckedUpdateManyWithoutInboundChannelNestedInput
+  }
+
+  export type InboundChannelUncheckedUpdateManyWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    channelType?: EnumInboundChannelTypeFieldUpdateOperationsInput | $Enums.InboundChannelType
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    defaultPriority?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    metadata?: JsonNullValueInput | InputJsonValue
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    actualizadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RegistroCreateManyInboundChannelInput = {
+    id?: string
+    nombreCliente: string
+    contacto?: string | null
+    plantillaId: string
+    especificaciones: JsonNullValueInput | InputJsonValue
+    prioridad?: $Enums.Prioridad
+    estado?: $Enums.EstadoRegistro
+    usuarioId: string
+    fechaRegistro?: Date | string
+    fechaActualizacion?: Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type RegistroUpdateWithoutInboundChannelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreCliente?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    especificaciones?: JsonNullValueInput | InputJsonValue
+    prioridad?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    estado?: EnumEstadoRegistroFieldUpdateOperationsInput | $Enums.EstadoRegistro
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+    plantilla?: PlantillaUpdateOneRequiredWithoutRegistrosNestedInput
+    auditoria?: AuditEventUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type RegistroUncheckedUpdateWithoutInboundChannelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreCliente?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    plantillaId?: StringFieldUpdateOperationsInput | string
+    especificaciones?: JsonNullValueInput | InputJsonValue
+    prioridad?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    estado?: EnumEstadoRegistroFieldUpdateOperationsInput | $Enums.EstadoRegistro
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
+    auditoria?: AuditEventUncheckedUpdateManyWithoutRegistroNestedInput
+  }
+
+  export type RegistroUncheckedUpdateManyWithoutInboundChannelInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombreCliente?: StringFieldUpdateOperationsInput | string
+    contacto?: NullableStringFieldUpdateOperationsInput | string | null
+    plantillaId?: StringFieldUpdateOperationsInput | string
+    especificaciones?: JsonNullValueInput | InputJsonValue
+    prioridad?: EnumPrioridadFieldUpdateOperationsInput | $Enums.Prioridad
+    estado?: EnumEstadoRegistroFieldUpdateOperationsInput | $Enums.EstadoRegistro
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    fechaRegistro?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundMetadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type AuditEventCreateManyRegistroInput = {

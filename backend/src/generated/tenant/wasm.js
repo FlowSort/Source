@@ -101,6 +101,19 @@ exports.Prisma.PlantillaScalarFieldEnum = {
   campos: 'campos'
 };
 
+exports.Prisma.InboundChannelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  channelType: 'channelType',
+  tokenHash: 'tokenHash',
+  templateId: 'templateId',
+  defaultPriority: 'defaultPriority',
+  isActive: 'isActive',
+  metadata: 'metadata',
+  creadoEn: 'creadoEn',
+  actualizadoEn: 'actualizadoEn'
+};
+
 exports.Prisma.RegistroScalarFieldEnum = {
   id: 'id',
   nombreCliente: 'nombreCliente',
@@ -111,7 +124,9 @@ exports.Prisma.RegistroScalarFieldEnum = {
   estado: 'estado',
   usuarioId: 'usuarioId',
   fechaRegistro: 'fechaRegistro',
-  fechaActualizacion: 'fechaActualizacion'
+  fechaActualizacion: 'fechaActualizacion',
+  inboundChannelId: 'inboundChannelId',
+  inboundMetadata: 'inboundMetadata'
 };
 
 exports.Prisma.AuditEventScalarFieldEnum = {
@@ -129,6 +144,11 @@ exports.Prisma.SortOrder = {
 };
 
 exports.Prisma.JsonNullValueInput = {
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -160,8 +180,16 @@ exports.EstadoRegistro = exports.$Enums.EstadoRegistro = {
   COMPLETADO: 'COMPLETADO'
 };
 
+exports.InboundChannelType = exports.$Enums.InboundChannelType = {
+  KIOSK: 'KIOSK',
+  WEB_FORM: 'WEB_FORM',
+  WEBHOOK: 'WEBHOOK',
+  QR: 'QR'
+};
+
 exports.Prisma.ModelName = {
   Plantilla: 'Plantilla',
+  InboundChannel: 'InboundChannel',
   Registro: 'Registro',
   AuditEvent: 'AuditEvent'
 };
@@ -212,13 +240,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/tenant\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"MANAGED_DATABASE_URL\")\n}\n\nmodel Plantilla {\n  id          String     @id @default(uuid())\n  nombre      String     @unique\n  descripcion String?\n  esDefault   Boolean    @default(false)\n  campos      Json\n  registros   Registro[]\n}\n\nmodel Registro {\n  id                 String         @id @default(uuid())\n  nombreCliente      String\n  contacto           String?\n  plantillaId        String\n  plantilla          Plantilla      @relation(fields: [plantillaId], references: [id])\n  especificaciones   Json\n  prioridad          Prioridad      @default(PREDETERMINADA)\n  estado             EstadoRegistro @default(PENDIENTE)\n  usuarioId          String\n  fechaRegistro      DateTime       @default(now())\n  fechaActualizacion DateTime       @updatedAt\n  auditoria          AuditEvent[]\n\n  @@index([prioridad])\n  @@index([fechaRegistro])\n  @@index([plantillaId])\n  @@index([usuarioId])\n}\n\nmodel AuditEvent {\n  id         String   @id @default(uuid())\n  registroId String\n  registro   Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)\n  usuarioId  String\n  accion     String\n  detalle    String\n  creadoEn   DateTime @default(now())\n\n  @@index([registroId, creadoEn])\n}\n\nenum Prioridad {\n  BAJA\n  PREDETERMINADA\n  ALTA\n  SUPER_ALTA\n}\n\nenum EstadoRegistro {\n  PENDIENTE\n  EN_PROCESO\n  COMPLETADO\n}\n",
-  "inlineSchemaHash": "869ab4ca3e6ce164b60c35275074c506f0643e81dda2d40b8e04698146bffd0c",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/tenant\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"MANAGED_DATABASE_URL\")\n}\n\nmodel Plantilla {\n  id              String           @id @default(uuid()) @db.Uuid\n  nombre          String           @unique\n  descripcion     String?\n  esDefault       Boolean          @default(false)\n  campos          Json\n  registros       Registro[]\n  inboundChannels InboundChannel[]\n}\n\nmodel InboundChannel {\n  id              String             @id @default(uuid()) @db.Uuid\n  name            String\n  channelType     InboundChannelType @map(\"channel_type\")\n  tokenHash       String             @unique @map(\"token\")\n  templateId      String             @map(\"template_id\") @db.Uuid\n  template        Plantilla          @relation(fields: [templateId], references: [id], onDelete: Restrict)\n  defaultPriority Prioridad          @default(PREDETERMINADA) @map(\"default_priority\")\n  isActive        Boolean            @default(true) @map(\"is_active\")\n  metadata        Json               @default(\"{}\")\n  creadoEn        DateTime           @default(now()) @map(\"created_at\")\n  actualizadoEn   DateTime           @updatedAt @map(\"updated_at\")\n  registros       Registro[]\n\n  @@index([templateId, isActive])\n  @@map(\"inbound_channels\")\n}\n\nmodel Registro {\n  id                 String          @id @default(uuid()) @db.Uuid\n  nombreCliente      String\n  contacto           String?\n  plantillaId        String          @db.Uuid\n  plantilla          Plantilla       @relation(fields: [plantillaId], references: [id])\n  especificaciones   Json\n  prioridad          Prioridad       @default(PREDETERMINADA)\n  estado             EstadoRegistro  @default(PENDIENTE)\n  usuarioId          String          @db.Uuid\n  fechaRegistro      DateTime        @default(now())\n  fechaActualizacion DateTime        @updatedAt\n  auditoria          AuditEvent[]\n  inboundChannelId   String?         @map(\"inbound_channel_id\") @db.Uuid\n  inboundChannel     InboundChannel? @relation(fields: [inboundChannelId], references: [id], onDelete: SetNull)\n  inboundMetadata    Json?           @map(\"inbound_metadata\")\n\n  @@index([prioridad])\n  @@index([fechaRegistro])\n  @@index([plantillaId])\n  @@index([usuarioId])\n  @@index([inboundChannelId])\n}\n\nmodel AuditEvent {\n  id         String   @id @default(uuid()) @db.Uuid\n  registroId String   @db.Uuid\n  registro   Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)\n  usuarioId  String   @db.Uuid\n  accion     String\n  detalle    String\n  creadoEn   DateTime @default(now())\n\n  @@index([registroId, creadoEn])\n}\n\nenum Prioridad {\n  BAJA\n  PREDETERMINADA\n  ALTA\n  SUPER_ALTA\n}\n\nenum EstadoRegistro {\n  PENDIENTE\n  EN_PROCESO\n  COMPLETADO\n}\n\nenum InboundChannelType {\n  KIOSK    @map(\"kiosk\")\n  WEB_FORM @map(\"web_form\")\n  WEBHOOK  @map(\"webhook\")\n  QR       @map(\"qr\")\n\n  @@map(\"inbound_channel_type\")\n}\n",
+  "inlineSchemaHash": "5ba05ae5433ca170e69140b1cf06ee591dbf95258ffb12527922bcbbd187dcf6",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Plantilla\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"esDefault\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"campos\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"registros\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"PlantillaToRegistro\"}],\"dbName\":null},\"Registro\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombreCliente\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contacto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantillaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantilla\",\"kind\":\"object\",\"type\":\"Plantilla\",\"relationName\":\"PlantillaToRegistro\"},{\"name\":\"especificaciones\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"prioridad\",\"kind\":\"enum\",\"type\":\"Prioridad\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechaRegistro\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fechaActualizacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"auditoria\",\"kind\":\"object\",\"type\":\"AuditEvent\",\"relationName\":\"AuditEventToRegistro\"}],\"dbName\":null},\"AuditEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registroId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registro\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"AuditEventToRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"detalle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Plantilla\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"descripcion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"esDefault\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"campos\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"registros\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"PlantillaToRegistro\"},{\"name\":\"inboundChannels\",\"kind\":\"object\",\"type\":\"InboundChannel\",\"relationName\":\"InboundChannelToPlantilla\"}],\"dbName\":null},\"InboundChannel\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"channelType\",\"kind\":\"enum\",\"type\":\"InboundChannelType\",\"dbName\":\"channel_type\"},{\"name\":\"tokenHash\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"token\"},{\"name\":\"templateId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"template_id\"},{\"name\":\"template\",\"kind\":\"object\",\"type\":\"Plantilla\",\"relationName\":\"InboundChannelToPlantilla\"},{\"name\":\"defaultPriority\",\"kind\":\"enum\",\"type\":\"Prioridad\",\"dbName\":\"default_priority\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"metadata\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"actualizadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"registros\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"InboundChannelToRegistro\"}],\"dbName\":\"inbound_channels\"},\"Registro\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombreCliente\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"contacto\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantillaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"plantilla\",\"kind\":\"object\",\"type\":\"Plantilla\",\"relationName\":\"PlantillaToRegistro\"},{\"name\":\"especificaciones\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"prioridad\",\"kind\":\"enum\",\"type\":\"Prioridad\"},{\"name\":\"estado\",\"kind\":\"enum\",\"type\":\"EstadoRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"fechaRegistro\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"fechaActualizacion\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"auditoria\",\"kind\":\"object\",\"type\":\"AuditEvent\",\"relationName\":\"AuditEventToRegistro\"},{\"name\":\"inboundChannelId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"inbound_channel_id\"},{\"name\":\"inboundChannel\",\"kind\":\"object\",\"type\":\"InboundChannel\",\"relationName\":\"InboundChannelToRegistro\"},{\"name\":\"inboundMetadata\",\"kind\":\"scalar\",\"type\":\"Json\",\"dbName\":\"inbound_metadata\"}],\"dbName\":null},\"AuditEvent\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registroId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"registro\",\"kind\":\"object\",\"type\":\"Registro\",\"relationName\":\"AuditEventToRegistro\"},{\"name\":\"usuarioId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"accion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"detalle\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

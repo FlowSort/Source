@@ -129,6 +129,19 @@ exports.Prisma.PlantillaScalarFieldEnum = {
   campos: 'campos'
 };
 
+exports.Prisma.InboundChannelScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  channelType: 'channelType',
+  tokenHash: 'tokenHash',
+  templateId: 'templateId',
+  defaultPriority: 'defaultPriority',
+  isActive: 'isActive',
+  metadata: 'metadata',
+  creadoEn: 'creadoEn',
+  actualizadoEn: 'actualizadoEn'
+};
+
 exports.Prisma.RegistroScalarFieldEnum = {
   id: 'id',
   nombreCliente: 'nombreCliente',
@@ -139,7 +152,9 @@ exports.Prisma.RegistroScalarFieldEnum = {
   estado: 'estado',
   usuarioId: 'usuarioId',
   fechaRegistro: 'fechaRegistro',
-  fechaActualizacion: 'fechaActualizacion'
+  fechaActualizacion: 'fechaActualizacion',
+  inboundChannelId: 'inboundChannelId',
+  inboundMetadata: 'inboundMetadata'
 };
 
 exports.Prisma.AuditEventScalarFieldEnum = {
@@ -160,6 +175,11 @@ exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -175,6 +195,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.InboundChannelType = exports.$Enums.InboundChannelType = {
+  KIOSK: 'KIOSK',
+  WEB_FORM: 'WEB_FORM',
+  WEBHOOK: 'WEBHOOK',
+  QR: 'QR'
+};
+
 exports.Prioridad = exports.$Enums.Prioridad = {
   BAJA: 'BAJA',
   PREDETERMINADA: 'PREDETERMINADA',
@@ -190,6 +217,7 @@ exports.EstadoRegistro = exports.$Enums.EstadoRegistro = {
 
 exports.Prisma.ModelName = {
   Plantilla: 'Plantilla',
+  InboundChannel: 'InboundChannel',
   Registro: 'Registro',
   AuditEvent: 'AuditEvent'
 };

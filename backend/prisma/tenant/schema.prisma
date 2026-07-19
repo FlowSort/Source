@@ -7,42 +7,71 @@ datasource db {
   provider = "postgresql"
   url      = env("MANAGED_DATABASE_URL")
 }
+
 model Plantilla {
-  id String @id @default(uuid())
-  nombre String @unique
-  descripcion String?
-  esDefault Boolean @default(false)
-  campos Json
-  registros Registro[]
+  id              String           @id @default(uuid()) @db.Uuid
+  nombre          String           @unique
+  descripcion     String?
+  esDefault       Boolean          @default(false)
+  campos          Json
+  registros       Registro[]
+  inboundChannels InboundChannel[]
 }
+
+model InboundChannel {
+  id              String             @id @default(uuid()) @db.Uuid
+  name            String
+  channelType     InboundChannelType @map("channel_type")
+  tokenHash       String             @unique @map("token")
+  templateId      String             @map("template_id") @db.Uuid
+  template        Plantilla          @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  defaultPriority Prioridad          @default(PREDETERMINADA) @map("default_priority")
+  isActive        Boolean            @default(true) @map("is_active")
+  metadata        Json               @default("{}")
+  creadoEn        DateTime           @default(now()) @map("created_at")
+  actualizadoEn   DateTime           @updatedAt @map("updated_at")
+  registros       Registro[]
+
+  @@index([templateId, isActive])
+  @@map("inbound_channels")
+}
+
 model Registro {
-  id String @id @default(uuid())
-  nombreCliente String
-  contacto String?
-  plantillaId String
-  plantilla Plantilla @relation(fields:[plantillaId],references:[id])
-  especificaciones Json
-  prioridad Prioridad @default(PREDETERMINADA)
-  estado EstadoRegistro @default(PENDIENTE)
-  usuarioId String
-  fechaRegistro DateTime @default(now())
-  fechaActualizacion DateTime @updatedAt
-  auditoria AuditEvent[]
+  id                 String          @id @default(uuid()) @db.Uuid
+  nombreCliente      String
+  contacto           String?
+  plantillaId        String          @db.Uuid
+  plantilla          Plantilla       @relation(fields: [plantillaId], references: [id])
+  especificaciones   Json
+  prioridad          Prioridad       @default(PREDETERMINADA)
+  estado             EstadoRegistro  @default(PENDIENTE)
+  usuarioId          String          @db.Uuid
+  fechaRegistro      DateTime        @default(now())
+  fechaActualizacion DateTime        @updatedAt
+  auditoria          AuditEvent[]
+  inboundChannelId   String?         @map("inbound_channel_id") @db.Uuid
+  inboundChannel     InboundChannel? @relation(fields: [inboundChannelId], references: [id], onDelete: SetNull)
+  inboundMetadata    Json?           @map("inbound_metadata")
+
   @@index([prioridad])
   @@index([fechaRegistro])
   @@index([plantillaId])
   @@index([usuarioId])
+  @@index([inboundChannelId])
 }
+
 model AuditEvent {
-  id String @id @default(uuid())
-  registroId String
-  registro Registro @relation(fields:[registroId], references:[id], onDelete:Cascade)
-  usuarioId String
-  accion String
-  detalle String
-  creadoEn DateTime @default(now())
+  id         String   @id @default(uuid()) @db.Uuid
+  registroId String   @db.Uuid
+  registro   Registro @relation(fields: [registroId], references: [id], onDelete: Cascade)
+  usuarioId  String   @db.Uuid
+  accion     String
+  detalle    String
+  creadoEn   DateTime @default(now())
+
   @@index([registroId, creadoEn])
 }
+
 enum Prioridad {
   BAJA
   PREDETERMINADA
@@ -54,4 +83,13 @@ enum EstadoRegistro {
   PENDIENTE
   EN_PROCESO
   COMPLETADO
+}
+
+enum InboundChannelType {
+  KIOSK    @map("kiosk")
+  WEB_FORM @map("web_form")
+  WEBHOOK  @map("webhook")
+  QR       @map("qr")
+
+  @@map("inbound_channel_type")
 }

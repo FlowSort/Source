@@ -9,14 +9,29 @@ datasource db {
 }
 
 model Empresa {
-  id              String        @id @default(uuid())
+  id              String                @id @default(uuid())
   nombre          String
   logoUrl         String?
-  modoHostingDB   ModoHostingDB @default(GOOGLE_CLOUD)
+  modoHostingDB   ModoHostingDB         @default(GOOGLE_CLOUD)
   conexionCifrada String?
-  schemaTenant    String?       @unique
-  creadoEn        DateTime      @default(now())
+  schemaTenant    String?               @unique
+  creadoEn        DateTime              @default(now())
   usuarios        Usuario[]
+  inboundRoutes   InboundChannelRoute[]
+}
+
+model InboundChannelRoute {
+  id        String   @id @default(uuid()) @db.Uuid
+  empresaId String   @map("empresa_id")
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  channelId String   @map("channel_id") @db.Uuid
+  tokenHash String   @unique @map("token_hash")
+  isActive  Boolean  @default(true) @map("is_active")
+  creadoEn  DateTime @default(now()) @map("created_at")
+
+  @@unique([empresaId, channelId])
+  @@index([empresaId, isActive])
+  @@map("inbound_channel_routes")
 }
 
 model Usuario {

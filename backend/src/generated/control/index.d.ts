@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type Empresa = $Result.DefaultSelection<Prisma.$EmpresaPayload>
 /**
+ * Model InboundChannelRoute
+ * 
+ */
+export type InboundChannelRoute = $Result.DefaultSelection<Prisma.$InboundChannelRoutePayload>
+/**
  * Model Usuario
  * 
  */
@@ -180,6 +185,16 @@ export class PrismaClient<
     * ```
     */
   get empresa(): Prisma.EmpresaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboundChannelRoute`: Exposes CRUD operations for the **InboundChannelRoute** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboundChannelRoutes
+    * const inboundChannelRoutes = await prisma.inboundChannelRoute.findMany()
+    * ```
+    */
+  get inboundChannelRoute(): Prisma.InboundChannelRouteDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.usuario`: Exposes CRUD operations for the **Usuario** model.
@@ -632,6 +647,7 @@ export namespace Prisma {
 
   export const ModelName: {
     Empresa: 'Empresa',
+    InboundChannelRoute: 'InboundChannelRoute',
     Usuario: 'Usuario'
   };
 
@@ -651,7 +667,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "empresa" | "usuario"
+      modelProps: "empresa" | "inboundChannelRoute" | "usuario"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -726,6 +742,80 @@ export namespace Prisma {
           count: {
             args: Prisma.EmpresaCountArgs<ExtArgs>
             result: $Utils.Optional<EmpresaCountAggregateOutputType> | number
+          }
+        }
+      }
+      InboundChannelRoute: {
+        payload: Prisma.$InboundChannelRoutePayload<ExtArgs>
+        fields: Prisma.InboundChannelRouteFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboundChannelRouteFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboundChannelRouteFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          findFirst: {
+            args: Prisma.InboundChannelRouteFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboundChannelRouteFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          findMany: {
+            args: Prisma.InboundChannelRouteFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>[]
+          }
+          create: {
+            args: Prisma.InboundChannelRouteCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          createMany: {
+            args: Prisma.InboundChannelRouteCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboundChannelRouteCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>[]
+          }
+          delete: {
+            args: Prisma.InboundChannelRouteDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          update: {
+            args: Prisma.InboundChannelRouteUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          deleteMany: {
+            args: Prisma.InboundChannelRouteDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboundChannelRouteUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboundChannelRouteUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>[]
+          }
+          upsert: {
+            args: Prisma.InboundChannelRouteUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboundChannelRoutePayload>
+          }
+          aggregate: {
+            args: Prisma.InboundChannelRouteAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboundChannelRoute>
+          }
+          groupBy: {
+            args: Prisma.InboundChannelRouteGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboundChannelRouteGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboundChannelRouteCountArgs<ExtArgs>
+            result: $Utils.Optional<InboundChannelRouteCountAggregateOutputType> | number
           }
         }
       }
@@ -900,6 +990,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     empresa?: EmpresaOmit
+    inboundChannelRoute?: InboundChannelRouteOmit
     usuario?: UsuarioOmit
   }
 
@@ -982,10 +1073,12 @@ export namespace Prisma {
 
   export type EmpresaCountOutputType = {
     usuarios: number
+    inboundRoutes: number
   }
 
   export type EmpresaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuarios?: boolean | EmpresaCountOutputTypeCountUsuariosArgs
+    inboundRoutes?: boolean | EmpresaCountOutputTypeCountInboundRoutesArgs
   }
 
   // Custom InputTypes
@@ -1004,6 +1097,13 @@ export namespace Prisma {
    */
   export type EmpresaCountOutputTypeCountUsuariosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: UsuarioWhereInput
+  }
+
+  /**
+   * EmpresaCountOutputType without action
+   */
+  export type EmpresaCountOutputTypeCountInboundRoutesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboundChannelRouteWhereInput
   }
 
 
@@ -1192,6 +1292,7 @@ export namespace Prisma {
     schemaTenant?: boolean
     creadoEn?: boolean
     usuarios?: boolean | Empresa$usuariosArgs<ExtArgs>
+    inboundRoutes?: boolean | Empresa$inboundRoutesArgs<ExtArgs>
     _count?: boolean | EmpresaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["empresa"]>
 
@@ -1228,6 +1329,7 @@ export namespace Prisma {
   export type EmpresaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "logoUrl" | "modoHostingDB" | "conexionCifrada" | "schemaTenant" | "creadoEn", ExtArgs["result"]["empresa"]>
   export type EmpresaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuarios?: boolean | Empresa$usuariosArgs<ExtArgs>
+    inboundRoutes?: boolean | Empresa$inboundRoutesArgs<ExtArgs>
     _count?: boolean | EmpresaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type EmpresaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1237,6 +1339,7 @@ export namespace Prisma {
     name: "Empresa"
     objects: {
       usuarios: Prisma.$UsuarioPayload<ExtArgs>[]
+      inboundRoutes: Prisma.$InboundChannelRoutePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1641,6 +1744,7 @@ export namespace Prisma {
   export interface Prisma__EmpresaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     usuarios<T extends Empresa$usuariosArgs<ExtArgs> = {}>(args?: Subset<T, Empresa$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    inboundRoutes<T extends Empresa$inboundRoutesArgs<ExtArgs> = {}>(args?: Subset<T, Empresa$inboundRoutesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2089,6 +2193,30 @@ export namespace Prisma {
   }
 
   /**
+   * Empresa.inboundRoutes
+   */
+  export type Empresa$inboundRoutesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    where?: InboundChannelRouteWhereInput
+    orderBy?: InboundChannelRouteOrderByWithRelationInput | InboundChannelRouteOrderByWithRelationInput[]
+    cursor?: InboundChannelRouteWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InboundChannelRouteScalarFieldEnum | InboundChannelRouteScalarFieldEnum[]
+  }
+
+  /**
    * Empresa without action
    */
   export type EmpresaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2104,6 +2232,1077 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: EmpresaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InboundChannelRoute
+   */
+
+  export type AggregateInboundChannelRoute = {
+    _count: InboundChannelRouteCountAggregateOutputType | null
+    _min: InboundChannelRouteMinAggregateOutputType | null
+    _max: InboundChannelRouteMaxAggregateOutputType | null
+  }
+
+  export type InboundChannelRouteMinAggregateOutputType = {
+    id: string | null
+    empresaId: string | null
+    channelId: string | null
+    tokenHash: string | null
+    isActive: boolean | null
+    creadoEn: Date | null
+  }
+
+  export type InboundChannelRouteMaxAggregateOutputType = {
+    id: string | null
+    empresaId: string | null
+    channelId: string | null
+    tokenHash: string | null
+    isActive: boolean | null
+    creadoEn: Date | null
+  }
+
+  export type InboundChannelRouteCountAggregateOutputType = {
+    id: number
+    empresaId: number
+    channelId: number
+    tokenHash: number
+    isActive: number
+    creadoEn: number
+    _all: number
+  }
+
+
+  export type InboundChannelRouteMinAggregateInputType = {
+    id?: true
+    empresaId?: true
+    channelId?: true
+    tokenHash?: true
+    isActive?: true
+    creadoEn?: true
+  }
+
+  export type InboundChannelRouteMaxAggregateInputType = {
+    id?: true
+    empresaId?: true
+    channelId?: true
+    tokenHash?: true
+    isActive?: true
+    creadoEn?: true
+  }
+
+  export type InboundChannelRouteCountAggregateInputType = {
+    id?: true
+    empresaId?: true
+    channelId?: true
+    tokenHash?: true
+    isActive?: true
+    creadoEn?: true
+    _all?: true
+  }
+
+  export type InboundChannelRouteAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboundChannelRoute to aggregate.
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannelRoutes to fetch.
+     */
+    orderBy?: InboundChannelRouteOrderByWithRelationInput | InboundChannelRouteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboundChannelRouteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannelRoutes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannelRoutes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboundChannelRoutes
+    **/
+    _count?: true | InboundChannelRouteCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboundChannelRouteMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboundChannelRouteMaxAggregateInputType
+  }
+
+  export type GetInboundChannelRouteAggregateType<T extends InboundChannelRouteAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboundChannelRoute]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboundChannelRoute[P]>
+      : GetScalarType<T[P], AggregateInboundChannelRoute[P]>
+  }
+
+
+
+
+  export type InboundChannelRouteGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboundChannelRouteWhereInput
+    orderBy?: InboundChannelRouteOrderByWithAggregationInput | InboundChannelRouteOrderByWithAggregationInput[]
+    by: InboundChannelRouteScalarFieldEnum[] | InboundChannelRouteScalarFieldEnum
+    having?: InboundChannelRouteScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboundChannelRouteCountAggregateInputType | true
+    _min?: InboundChannelRouteMinAggregateInputType
+    _max?: InboundChannelRouteMaxAggregateInputType
+  }
+
+  export type InboundChannelRouteGroupByOutputType = {
+    id: string
+    empresaId: string
+    channelId: string
+    tokenHash: string
+    isActive: boolean
+    creadoEn: Date
+    _count: InboundChannelRouteCountAggregateOutputType | null
+    _min: InboundChannelRouteMinAggregateOutputType | null
+    _max: InboundChannelRouteMaxAggregateOutputType | null
+  }
+
+  type GetInboundChannelRouteGroupByPayload<T extends InboundChannelRouteGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboundChannelRouteGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboundChannelRouteGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboundChannelRouteGroupByOutputType[P]>
+            : GetScalarType<T[P], InboundChannelRouteGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboundChannelRouteSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    empresaId?: boolean
+    channelId?: boolean
+    tokenHash?: boolean
+    isActive?: boolean
+    creadoEn?: boolean
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannelRoute"]>
+
+  export type InboundChannelRouteSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    empresaId?: boolean
+    channelId?: boolean
+    tokenHash?: boolean
+    isActive?: boolean
+    creadoEn?: boolean
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannelRoute"]>
+
+  export type InboundChannelRouteSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    empresaId?: boolean
+    channelId?: boolean
+    tokenHash?: boolean
+    isActive?: boolean
+    creadoEn?: boolean
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboundChannelRoute"]>
+
+  export type InboundChannelRouteSelectScalar = {
+    id?: boolean
+    empresaId?: boolean
+    channelId?: boolean
+    tokenHash?: boolean
+    isActive?: boolean
+    creadoEn?: boolean
+  }
+
+  export type InboundChannelRouteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "empresaId" | "channelId" | "tokenHash" | "isActive" | "creadoEn", ExtArgs["result"]["inboundChannelRoute"]>
+  export type InboundChannelRouteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }
+  export type InboundChannelRouteIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }
+  export type InboundChannelRouteIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    empresa?: boolean | EmpresaDefaultArgs<ExtArgs>
+  }
+
+  export type $InboundChannelRoutePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboundChannelRoute"
+    objects: {
+      empresa: Prisma.$EmpresaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      empresaId: string
+      channelId: string
+      tokenHash: string
+      isActive: boolean
+      creadoEn: Date
+    }, ExtArgs["result"]["inboundChannelRoute"]>
+    composites: {}
+  }
+
+  type InboundChannelRouteGetPayload<S extends boolean | null | undefined | InboundChannelRouteDefaultArgs> = $Result.GetResult<Prisma.$InboundChannelRoutePayload, S>
+
+  type InboundChannelRouteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboundChannelRouteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboundChannelRouteCountAggregateInputType | true
+    }
+
+  export interface InboundChannelRouteDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboundChannelRoute'], meta: { name: 'InboundChannelRoute' } }
+    /**
+     * Find zero or one InboundChannelRoute that matches the filter.
+     * @param {InboundChannelRouteFindUniqueArgs} args - Arguments to find a InboundChannelRoute
+     * @example
+     * // Get one InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboundChannelRouteFindUniqueArgs>(args: SelectSubset<T, InboundChannelRouteFindUniqueArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboundChannelRoute that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboundChannelRouteFindUniqueOrThrowArgs} args - Arguments to find a InboundChannelRoute
+     * @example
+     * // Get one InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboundChannelRouteFindUniqueOrThrowArgs>(args: SelectSubset<T, InboundChannelRouteFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboundChannelRoute that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteFindFirstArgs} args - Arguments to find a InboundChannelRoute
+     * @example
+     * // Get one InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboundChannelRouteFindFirstArgs>(args?: SelectSubset<T, InboundChannelRouteFindFirstArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboundChannelRoute that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteFindFirstOrThrowArgs} args - Arguments to find a InboundChannelRoute
+     * @example
+     * // Get one InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboundChannelRouteFindFirstOrThrowArgs>(args?: SelectSubset<T, InboundChannelRouteFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboundChannelRoutes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboundChannelRoutes
+     * const inboundChannelRoutes = await prisma.inboundChannelRoute.findMany()
+     * 
+     * // Get first 10 InboundChannelRoutes
+     * const inboundChannelRoutes = await prisma.inboundChannelRoute.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboundChannelRouteWithIdOnly = await prisma.inboundChannelRoute.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboundChannelRouteFindManyArgs>(args?: SelectSubset<T, InboundChannelRouteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboundChannelRoute.
+     * @param {InboundChannelRouteCreateArgs} args - Arguments to create a InboundChannelRoute.
+     * @example
+     * // Create one InboundChannelRoute
+     * const InboundChannelRoute = await prisma.inboundChannelRoute.create({
+     *   data: {
+     *     // ... data to create a InboundChannelRoute
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboundChannelRouteCreateArgs>(args: SelectSubset<T, InboundChannelRouteCreateArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboundChannelRoutes.
+     * @param {InboundChannelRouteCreateManyArgs} args - Arguments to create many InboundChannelRoutes.
+     * @example
+     * // Create many InboundChannelRoutes
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboundChannelRouteCreateManyArgs>(args?: SelectSubset<T, InboundChannelRouteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboundChannelRoutes and returns the data saved in the database.
+     * @param {InboundChannelRouteCreateManyAndReturnArgs} args - Arguments to create many InboundChannelRoutes.
+     * @example
+     * // Create many InboundChannelRoutes
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboundChannelRoutes and only return the `id`
+     * const inboundChannelRouteWithIdOnly = await prisma.inboundChannelRoute.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboundChannelRouteCreateManyAndReturnArgs>(args?: SelectSubset<T, InboundChannelRouteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboundChannelRoute.
+     * @param {InboundChannelRouteDeleteArgs} args - Arguments to delete one InboundChannelRoute.
+     * @example
+     * // Delete one InboundChannelRoute
+     * const InboundChannelRoute = await prisma.inboundChannelRoute.delete({
+     *   where: {
+     *     // ... filter to delete one InboundChannelRoute
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboundChannelRouteDeleteArgs>(args: SelectSubset<T, InboundChannelRouteDeleteArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboundChannelRoute.
+     * @param {InboundChannelRouteUpdateArgs} args - Arguments to update one InboundChannelRoute.
+     * @example
+     * // Update one InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboundChannelRouteUpdateArgs>(args: SelectSubset<T, InboundChannelRouteUpdateArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboundChannelRoutes.
+     * @param {InboundChannelRouteDeleteManyArgs} args - Arguments to filter InboundChannelRoutes to delete.
+     * @example
+     * // Delete a few InboundChannelRoutes
+     * const { count } = await prisma.inboundChannelRoute.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboundChannelRouteDeleteManyArgs>(args?: SelectSubset<T, InboundChannelRouteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboundChannelRoutes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboundChannelRoutes
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboundChannelRouteUpdateManyArgs>(args: SelectSubset<T, InboundChannelRouteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboundChannelRoutes and returns the data updated in the database.
+     * @param {InboundChannelRouteUpdateManyAndReturnArgs} args - Arguments to update many InboundChannelRoutes.
+     * @example
+     * // Update many InboundChannelRoutes
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboundChannelRoutes and only return the `id`
+     * const inboundChannelRouteWithIdOnly = await prisma.inboundChannelRoute.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboundChannelRouteUpdateManyAndReturnArgs>(args: SelectSubset<T, InboundChannelRouteUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboundChannelRoute.
+     * @param {InboundChannelRouteUpsertArgs} args - Arguments to update or create a InboundChannelRoute.
+     * @example
+     * // Update or create a InboundChannelRoute
+     * const inboundChannelRoute = await prisma.inboundChannelRoute.upsert({
+     *   create: {
+     *     // ... data to create a InboundChannelRoute
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboundChannelRoute we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboundChannelRouteUpsertArgs>(args: SelectSubset<T, InboundChannelRouteUpsertArgs<ExtArgs>>): Prisma__InboundChannelRouteClient<$Result.GetResult<Prisma.$InboundChannelRoutePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboundChannelRoutes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteCountArgs} args - Arguments to filter InboundChannelRoutes to count.
+     * @example
+     * // Count the number of InboundChannelRoutes
+     * const count = await prisma.inboundChannelRoute.count({
+     *   where: {
+     *     // ... the filter for the InboundChannelRoutes we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboundChannelRouteCountArgs>(
+      args?: Subset<T, InboundChannelRouteCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboundChannelRouteCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboundChannelRoute.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboundChannelRouteAggregateArgs>(args: Subset<T, InboundChannelRouteAggregateArgs>): Prisma.PrismaPromise<GetInboundChannelRouteAggregateType<T>>
+
+    /**
+     * Group by InboundChannelRoute.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboundChannelRouteGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboundChannelRouteGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboundChannelRouteGroupByArgs['orderBy'] }
+        : { orderBy?: InboundChannelRouteGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboundChannelRouteGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboundChannelRouteGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboundChannelRoute model
+   */
+  readonly fields: InboundChannelRouteFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboundChannelRoute.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboundChannelRouteClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    empresa<T extends EmpresaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EmpresaDefaultArgs<ExtArgs>>): Prisma__EmpresaClient<$Result.GetResult<Prisma.$EmpresaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboundChannelRoute model
+   */
+  interface InboundChannelRouteFieldRefs {
+    readonly id: FieldRef<"InboundChannelRoute", 'String'>
+    readonly empresaId: FieldRef<"InboundChannelRoute", 'String'>
+    readonly channelId: FieldRef<"InboundChannelRoute", 'String'>
+    readonly tokenHash: FieldRef<"InboundChannelRoute", 'String'>
+    readonly isActive: FieldRef<"InboundChannelRoute", 'Boolean'>
+    readonly creadoEn: FieldRef<"InboundChannelRoute", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboundChannelRoute findUnique
+   */
+  export type InboundChannelRouteFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannelRoute to fetch.
+     */
+    where: InboundChannelRouteWhereUniqueInput
+  }
+
+  /**
+   * InboundChannelRoute findUniqueOrThrow
+   */
+  export type InboundChannelRouteFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannelRoute to fetch.
+     */
+    where: InboundChannelRouteWhereUniqueInput
+  }
+
+  /**
+   * InboundChannelRoute findFirst
+   */
+  export type InboundChannelRouteFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannelRoute to fetch.
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannelRoutes to fetch.
+     */
+    orderBy?: InboundChannelRouteOrderByWithRelationInput | InboundChannelRouteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboundChannelRoutes.
+     */
+    cursor?: InboundChannelRouteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannelRoutes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannelRoutes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboundChannelRoutes.
+     */
+    distinct?: InboundChannelRouteScalarFieldEnum | InboundChannelRouteScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannelRoute findFirstOrThrow
+   */
+  export type InboundChannelRouteFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannelRoute to fetch.
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannelRoutes to fetch.
+     */
+    orderBy?: InboundChannelRouteOrderByWithRelationInput | InboundChannelRouteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboundChannelRoutes.
+     */
+    cursor?: InboundChannelRouteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannelRoutes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannelRoutes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboundChannelRoutes.
+     */
+    distinct?: InboundChannelRouteScalarFieldEnum | InboundChannelRouteScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannelRoute findMany
+   */
+  export type InboundChannelRouteFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter, which InboundChannelRoutes to fetch.
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboundChannelRoutes to fetch.
+     */
+    orderBy?: InboundChannelRouteOrderByWithRelationInput | InboundChannelRouteOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboundChannelRoutes.
+     */
+    cursor?: InboundChannelRouteWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboundChannelRoutes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboundChannelRoutes.
+     */
+    skip?: number
+    distinct?: InboundChannelRouteScalarFieldEnum | InboundChannelRouteScalarFieldEnum[]
+  }
+
+  /**
+   * InboundChannelRoute create
+   */
+  export type InboundChannelRouteCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InboundChannelRoute.
+     */
+    data: XOR<InboundChannelRouteCreateInput, InboundChannelRouteUncheckedCreateInput>
+  }
+
+  /**
+   * InboundChannelRoute createMany
+   */
+  export type InboundChannelRouteCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboundChannelRoutes.
+     */
+    data: InboundChannelRouteCreateManyInput | InboundChannelRouteCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboundChannelRoute createManyAndReturn
+   */
+  export type InboundChannelRouteCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboundChannelRoutes.
+     */
+    data: InboundChannelRouteCreateManyInput | InboundChannelRouteCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboundChannelRoute update
+   */
+  export type InboundChannelRouteUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InboundChannelRoute.
+     */
+    data: XOR<InboundChannelRouteUpdateInput, InboundChannelRouteUncheckedUpdateInput>
+    /**
+     * Choose, which InboundChannelRoute to update.
+     */
+    where: InboundChannelRouteWhereUniqueInput
+  }
+
+  /**
+   * InboundChannelRoute updateMany
+   */
+  export type InboundChannelRouteUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboundChannelRoutes.
+     */
+    data: XOR<InboundChannelRouteUpdateManyMutationInput, InboundChannelRouteUncheckedUpdateManyInput>
+    /**
+     * Filter which InboundChannelRoutes to update
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * Limit how many InboundChannelRoutes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboundChannelRoute updateManyAndReturn
+   */
+  export type InboundChannelRouteUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * The data used to update InboundChannelRoutes.
+     */
+    data: XOR<InboundChannelRouteUpdateManyMutationInput, InboundChannelRouteUncheckedUpdateManyInput>
+    /**
+     * Filter which InboundChannelRoutes to update
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * Limit how many InboundChannelRoutes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboundChannelRoute upsert
+   */
+  export type InboundChannelRouteUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InboundChannelRoute to update in case it exists.
+     */
+    where: InboundChannelRouteWhereUniqueInput
+    /**
+     * In case the InboundChannelRoute found by the `where` argument doesn't exist, create a new InboundChannelRoute with this data.
+     */
+    create: XOR<InboundChannelRouteCreateInput, InboundChannelRouteUncheckedCreateInput>
+    /**
+     * In case the InboundChannelRoute was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboundChannelRouteUpdateInput, InboundChannelRouteUncheckedUpdateInput>
+  }
+
+  /**
+   * InboundChannelRoute delete
+   */
+  export type InboundChannelRouteDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
+    /**
+     * Filter which InboundChannelRoute to delete.
+     */
+    where: InboundChannelRouteWhereUniqueInput
+  }
+
+  /**
+   * InboundChannelRoute deleteMany
+   */
+  export type InboundChannelRouteDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboundChannelRoutes to delete
+     */
+    where?: InboundChannelRouteWhereInput
+    /**
+     * Limit how many InboundChannelRoutes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboundChannelRoute without action
+   */
+  export type InboundChannelRouteDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboundChannelRoute
+     */
+    select?: InboundChannelRouteSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboundChannelRoute
+     */
+    omit?: InboundChannelRouteOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboundChannelRouteInclude<ExtArgs> | null
   }
 
 
@@ -3278,6 +4477,18 @@ export namespace Prisma {
   export type EmpresaScalarFieldEnum = (typeof EmpresaScalarFieldEnum)[keyof typeof EmpresaScalarFieldEnum]
 
 
+  export const InboundChannelRouteScalarFieldEnum: {
+    id: 'id',
+    empresaId: 'empresaId',
+    channelId: 'channelId',
+    tokenHash: 'tokenHash',
+    isActive: 'isActive',
+    creadoEn: 'creadoEn'
+  };
+
+  export type InboundChannelRouteScalarFieldEnum = (typeof InboundChannelRouteScalarFieldEnum)[keyof typeof InboundChannelRouteScalarFieldEnum]
+
+
   export const UsuarioScalarFieldEnum: {
     id: 'id',
     empresaId: 'empresaId',
@@ -3365,6 +4576,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'RolUsuario'
    */
   export type EnumRolUsuarioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RolUsuario'>
@@ -3375,13 +4593,6 @@ export namespace Prisma {
    * Reference to a field of type 'RolUsuario[]'
    */
   export type ListEnumRolUsuarioFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RolUsuario[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -3428,6 +4639,7 @@ export namespace Prisma {
     schemaTenant?: StringNullableFilter<"Empresa"> | string | null
     creadoEn?: DateTimeFilter<"Empresa"> | Date | string
     usuarios?: UsuarioListRelationFilter
+    inboundRoutes?: InboundChannelRouteListRelationFilter
   }
 
   export type EmpresaOrderByWithRelationInput = {
@@ -3439,6 +4651,7 @@ export namespace Prisma {
     schemaTenant?: SortOrderInput | SortOrder
     creadoEn?: SortOrder
     usuarios?: UsuarioOrderByRelationAggregateInput
+    inboundRoutes?: InboundChannelRouteOrderByRelationAggregateInput
   }
 
   export type EmpresaWhereUniqueInput = Prisma.AtLeast<{
@@ -3453,6 +4666,7 @@ export namespace Prisma {
     conexionCifrada?: StringNullableFilter<"Empresa"> | string | null
     creadoEn?: DateTimeFilter<"Empresa"> | Date | string
     usuarios?: UsuarioListRelationFilter
+    inboundRoutes?: InboundChannelRouteListRelationFilter
   }, "id" | "schemaTenant">
 
   export type EmpresaOrderByWithAggregationInput = {
@@ -3479,6 +4693,67 @@ export namespace Prisma {
     conexionCifrada?: StringNullableWithAggregatesFilter<"Empresa"> | string | null
     schemaTenant?: StringNullableWithAggregatesFilter<"Empresa"> | string | null
     creadoEn?: DateTimeWithAggregatesFilter<"Empresa"> | Date | string
+  }
+
+  export type InboundChannelRouteWhereInput = {
+    AND?: InboundChannelRouteWhereInput | InboundChannelRouteWhereInput[]
+    OR?: InboundChannelRouteWhereInput[]
+    NOT?: InboundChannelRouteWhereInput | InboundChannelRouteWhereInput[]
+    id?: UuidFilter<"InboundChannelRoute"> | string
+    empresaId?: StringFilter<"InboundChannelRoute"> | string
+    channelId?: UuidFilter<"InboundChannelRoute"> | string
+    tokenHash?: StringFilter<"InboundChannelRoute"> | string
+    isActive?: BoolFilter<"InboundChannelRoute"> | boolean
+    creadoEn?: DateTimeFilter<"InboundChannelRoute"> | Date | string
+    empresa?: XOR<EmpresaScalarRelationFilter, EmpresaWhereInput>
+  }
+
+  export type InboundChannelRouteOrderByWithRelationInput = {
+    id?: SortOrder
+    empresaId?: SortOrder
+    channelId?: SortOrder
+    tokenHash?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+    empresa?: EmpresaOrderByWithRelationInput
+  }
+
+  export type InboundChannelRouteWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tokenHash?: string
+    empresaId_channelId?: InboundChannelRouteEmpresaIdChannelIdCompoundUniqueInput
+    AND?: InboundChannelRouteWhereInput | InboundChannelRouteWhereInput[]
+    OR?: InboundChannelRouteWhereInput[]
+    NOT?: InboundChannelRouteWhereInput | InboundChannelRouteWhereInput[]
+    empresaId?: StringFilter<"InboundChannelRoute"> | string
+    channelId?: UuidFilter<"InboundChannelRoute"> | string
+    isActive?: BoolFilter<"InboundChannelRoute"> | boolean
+    creadoEn?: DateTimeFilter<"InboundChannelRoute"> | Date | string
+    empresa?: XOR<EmpresaScalarRelationFilter, EmpresaWhereInput>
+  }, "id" | "tokenHash" | "empresaId_channelId">
+
+  export type InboundChannelRouteOrderByWithAggregationInput = {
+    id?: SortOrder
+    empresaId?: SortOrder
+    channelId?: SortOrder
+    tokenHash?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+    _count?: InboundChannelRouteCountOrderByAggregateInput
+    _max?: InboundChannelRouteMaxOrderByAggregateInput
+    _min?: InboundChannelRouteMinOrderByAggregateInput
+  }
+
+  export type InboundChannelRouteScalarWhereWithAggregatesInput = {
+    AND?: InboundChannelRouteScalarWhereWithAggregatesInput | InboundChannelRouteScalarWhereWithAggregatesInput[]
+    OR?: InboundChannelRouteScalarWhereWithAggregatesInput[]
+    NOT?: InboundChannelRouteScalarWhereWithAggregatesInput | InboundChannelRouteScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"InboundChannelRoute"> | string
+    empresaId?: StringWithAggregatesFilter<"InboundChannelRoute"> | string
+    channelId?: UuidWithAggregatesFilter<"InboundChannelRoute"> | string
+    tokenHash?: StringWithAggregatesFilter<"InboundChannelRoute"> | string
+    isActive?: BoolWithAggregatesFilter<"InboundChannelRoute"> | boolean
+    creadoEn?: DateTimeWithAggregatesFilter<"InboundChannelRoute"> | Date | string
   }
 
   export type UsuarioWhereInput = {
@@ -3567,6 +4842,7 @@ export namespace Prisma {
     schemaTenant?: string | null
     creadoEn?: Date | string
     usuarios?: UsuarioCreateNestedManyWithoutEmpresaInput
+    inboundRoutes?: InboundChannelRouteCreateNestedManyWithoutEmpresaInput
   }
 
   export type EmpresaUncheckedCreateInput = {
@@ -3578,6 +4854,7 @@ export namespace Prisma {
     schemaTenant?: string | null
     creadoEn?: Date | string
     usuarios?: UsuarioUncheckedCreateNestedManyWithoutEmpresaInput
+    inboundRoutes?: InboundChannelRouteUncheckedCreateNestedManyWithoutEmpresaInput
   }
 
   export type EmpresaUpdateInput = {
@@ -3589,6 +4866,7 @@ export namespace Prisma {
     schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     usuarios?: UsuarioUpdateManyWithoutEmpresaNestedInput
+    inboundRoutes?: InboundChannelRouteUpdateManyWithoutEmpresaNestedInput
   }
 
   export type EmpresaUncheckedUpdateInput = {
@@ -3600,6 +4878,7 @@ export namespace Prisma {
     schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
     usuarios?: UsuarioUncheckedUpdateManyWithoutEmpresaNestedInput
+    inboundRoutes?: InboundChannelRouteUncheckedUpdateManyWithoutEmpresaNestedInput
   }
 
   export type EmpresaCreateManyInput = {
@@ -3629,6 +4908,68 @@ export namespace Prisma {
     modoHostingDB?: EnumModoHostingDBFieldUpdateOperationsInput | $Enums.ModoHostingDB
     conexionCifrada?: NullableStringFieldUpdateOperationsInput | string | null
     schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteCreateInput = {
+    id?: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
+    creadoEn?: Date | string
+    empresa: EmpresaCreateNestedOneWithoutInboundRoutesInput
+  }
+
+  export type InboundChannelRouteUncheckedCreateInput = {
+    id?: string
+    empresaId: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
+    creadoEn?: Date | string
+  }
+
+  export type InboundChannelRouteUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    empresa?: EmpresaUpdateOneRequiredWithoutInboundRoutesNestedInput
+  }
+
+  export type InboundChannelRouteUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    empresaId?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteCreateManyInput = {
+    id?: string
+    empresaId: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
+    creadoEn?: Date | string
+  }
+
+  export type InboundChannelRouteUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    empresaId?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -3769,12 +5110,22 @@ export namespace Prisma {
     none?: UsuarioWhereInput
   }
 
+  export type InboundChannelRouteListRelationFilter = {
+    every?: InboundChannelRouteWhereInput
+    some?: InboundChannelRouteWhereInput
+    none?: InboundChannelRouteWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type UsuarioOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InboundChannelRouteOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3868,16 +5219,88 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type EnumRolUsuarioFilter<$PrismaModel = never> = {
-    equals?: $Enums.RolUsuario | EnumRolUsuarioFieldRefInput<$PrismaModel>
-    in?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
-    notIn?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
-    not?: NestedEnumRolUsuarioFilter<$PrismaModel> | $Enums.RolUsuario
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type EmpresaScalarRelationFilter = {
+    is?: EmpresaWhereInput
+    isNot?: EmpresaWhereInput
+  }
+
+  export type InboundChannelRouteEmpresaIdChannelIdCompoundUniqueInput = {
+    empresaId: string
+    channelId: string
+  }
+
+  export type InboundChannelRouteCountOrderByAggregateInput = {
+    id?: SortOrder
+    empresaId?: SortOrder
+    channelId?: SortOrder
+    tokenHash?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type InboundChannelRouteMaxOrderByAggregateInput = {
+    id?: SortOrder
+    empresaId?: SortOrder
+    channelId?: SortOrder
+    tokenHash?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type InboundChannelRouteMinOrderByAggregateInput = {
+    id?: SortOrder
+    empresaId?: SortOrder
+    channelId?: SortOrder
+    tokenHash?: SortOrder
+    isActive?: SortOrder
+    creadoEn?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type EnumRolUsuarioFilter<$PrismaModel = never> = {
+    equals?: $Enums.RolUsuario | EnumRolUsuarioFieldRefInput<$PrismaModel>
+    in?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolUsuarioFilter<$PrismaModel> | $Enums.RolUsuario
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3889,11 +5312,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type EmpresaScalarRelationFilter = {
-    is?: EmpresaWhereInput
-    isNot?: EmpresaWhereInput
   }
 
   export type UsuarioCountOrderByAggregateInput = {
@@ -3950,14 +5368,6 @@ export namespace Prisma {
     _max?: NestedEnumRolUsuarioFilter<$PrismaModel>
   }
 
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -3981,11 +5391,25 @@ export namespace Prisma {
     connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
   }
 
+  export type InboundChannelRouteCreateNestedManyWithoutEmpresaInput = {
+    create?: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput> | InboundChannelRouteCreateWithoutEmpresaInput[] | InboundChannelRouteUncheckedCreateWithoutEmpresaInput[]
+    connectOrCreate?: InboundChannelRouteCreateOrConnectWithoutEmpresaInput | InboundChannelRouteCreateOrConnectWithoutEmpresaInput[]
+    createMany?: InboundChannelRouteCreateManyEmpresaInputEnvelope
+    connect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+  }
+
   export type UsuarioUncheckedCreateNestedManyWithoutEmpresaInput = {
     create?: XOR<UsuarioCreateWithoutEmpresaInput, UsuarioUncheckedCreateWithoutEmpresaInput> | UsuarioCreateWithoutEmpresaInput[] | UsuarioUncheckedCreateWithoutEmpresaInput[]
     connectOrCreate?: UsuarioCreateOrConnectWithoutEmpresaInput | UsuarioCreateOrConnectWithoutEmpresaInput[]
     createMany?: UsuarioCreateManyEmpresaInputEnvelope
     connect?: UsuarioWhereUniqueInput | UsuarioWhereUniqueInput[]
+  }
+
+  export type InboundChannelRouteUncheckedCreateNestedManyWithoutEmpresaInput = {
+    create?: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput> | InboundChannelRouteCreateWithoutEmpresaInput[] | InboundChannelRouteUncheckedCreateWithoutEmpresaInput[]
+    connectOrCreate?: InboundChannelRouteCreateOrConnectWithoutEmpresaInput | InboundChannelRouteCreateOrConnectWithoutEmpresaInput[]
+    createMany?: InboundChannelRouteCreateManyEmpresaInputEnvelope
+    connect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4018,6 +5442,20 @@ export namespace Prisma {
     deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
+  export type InboundChannelRouteUpdateManyWithoutEmpresaNestedInput = {
+    create?: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput> | InboundChannelRouteCreateWithoutEmpresaInput[] | InboundChannelRouteUncheckedCreateWithoutEmpresaInput[]
+    connectOrCreate?: InboundChannelRouteCreateOrConnectWithoutEmpresaInput | InboundChannelRouteCreateOrConnectWithoutEmpresaInput[]
+    upsert?: InboundChannelRouteUpsertWithWhereUniqueWithoutEmpresaInput | InboundChannelRouteUpsertWithWhereUniqueWithoutEmpresaInput[]
+    createMany?: InboundChannelRouteCreateManyEmpresaInputEnvelope
+    set?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    disconnect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    delete?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    connect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    update?: InboundChannelRouteUpdateWithWhereUniqueWithoutEmpresaInput | InboundChannelRouteUpdateWithWhereUniqueWithoutEmpresaInput[]
+    updateMany?: InboundChannelRouteUpdateManyWithWhereWithoutEmpresaInput | InboundChannelRouteUpdateManyWithWhereWithoutEmpresaInput[]
+    deleteMany?: InboundChannelRouteScalarWhereInput | InboundChannelRouteScalarWhereInput[]
+  }
+
   export type UsuarioUncheckedUpdateManyWithoutEmpresaNestedInput = {
     create?: XOR<UsuarioCreateWithoutEmpresaInput, UsuarioUncheckedCreateWithoutEmpresaInput> | UsuarioCreateWithoutEmpresaInput[] | UsuarioUncheckedCreateWithoutEmpresaInput[]
     connectOrCreate?: UsuarioCreateOrConnectWithoutEmpresaInput | UsuarioCreateOrConnectWithoutEmpresaInput[]
@@ -4032,6 +5470,38 @@ export namespace Prisma {
     deleteMany?: UsuarioScalarWhereInput | UsuarioScalarWhereInput[]
   }
 
+  export type InboundChannelRouteUncheckedUpdateManyWithoutEmpresaNestedInput = {
+    create?: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput> | InboundChannelRouteCreateWithoutEmpresaInput[] | InboundChannelRouteUncheckedCreateWithoutEmpresaInput[]
+    connectOrCreate?: InboundChannelRouteCreateOrConnectWithoutEmpresaInput | InboundChannelRouteCreateOrConnectWithoutEmpresaInput[]
+    upsert?: InboundChannelRouteUpsertWithWhereUniqueWithoutEmpresaInput | InboundChannelRouteUpsertWithWhereUniqueWithoutEmpresaInput[]
+    createMany?: InboundChannelRouteCreateManyEmpresaInputEnvelope
+    set?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    disconnect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    delete?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    connect?: InboundChannelRouteWhereUniqueInput | InboundChannelRouteWhereUniqueInput[]
+    update?: InboundChannelRouteUpdateWithWhereUniqueWithoutEmpresaInput | InboundChannelRouteUpdateWithWhereUniqueWithoutEmpresaInput[]
+    updateMany?: InboundChannelRouteUpdateManyWithWhereWithoutEmpresaInput | InboundChannelRouteUpdateManyWithWhereWithoutEmpresaInput[]
+    deleteMany?: InboundChannelRouteScalarWhereInput | InboundChannelRouteScalarWhereInput[]
+  }
+
+  export type EmpresaCreateNestedOneWithoutInboundRoutesInput = {
+    create?: XOR<EmpresaCreateWithoutInboundRoutesInput, EmpresaUncheckedCreateWithoutInboundRoutesInput>
+    connectOrCreate?: EmpresaCreateOrConnectWithoutInboundRoutesInput
+    connect?: EmpresaWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type EmpresaUpdateOneRequiredWithoutInboundRoutesNestedInput = {
+    create?: XOR<EmpresaCreateWithoutInboundRoutesInput, EmpresaUncheckedCreateWithoutInboundRoutesInput>
+    connectOrCreate?: EmpresaCreateOrConnectWithoutInboundRoutesInput
+    upsert?: EmpresaUpsertWithoutInboundRoutesInput
+    connect?: EmpresaWhereUniqueInput
+    update?: XOR<XOR<EmpresaUpdateToOneWithWhereWithoutInboundRoutesInput, EmpresaUpdateWithoutInboundRoutesInput>, EmpresaUncheckedUpdateWithoutInboundRoutesInput>
+  }
+
   export type EmpresaCreateNestedOneWithoutUsuariosInput = {
     create?: XOR<EmpresaCreateWithoutUsuariosInput, EmpresaUncheckedCreateWithoutUsuariosInput>
     connectOrCreate?: EmpresaCreateOrConnectWithoutUsuariosInput
@@ -4040,10 +5510,6 @@ export namespace Prisma {
 
   export type EnumRolUsuarioFieldUpdateOperationsInput = {
     set?: $Enums.RolUsuario
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -4188,16 +5654,49 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumRolUsuarioFilter<$PrismaModel = never> = {
-    equals?: $Enums.RolUsuario | EnumRolUsuarioFieldRefInput<$PrismaModel>
-    in?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
-    notIn?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
-    not?: NestedEnumRolUsuarioFilter<$PrismaModel> | $Enums.RolUsuario
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRolUsuarioFilter<$PrismaModel = never> = {
+    equals?: $Enums.RolUsuario | EnumRolUsuarioFieldRefInput<$PrismaModel>
+    in?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RolUsuario[] | ListEnumRolUsuarioFieldRefInput<$PrismaModel>
+    not?: NestedEnumRolUsuarioFilter<$PrismaModel> | $Enums.RolUsuario
   }
 
   export type NestedEnumRolUsuarioWithAggregatesFilter<$PrismaModel = never> = {
@@ -4208,14 +5707,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRolUsuarioFilter<$PrismaModel>
     _max?: NestedEnumRolUsuarioFilter<$PrismaModel>
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -4277,6 +5768,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type InboundChannelRouteCreateWithoutEmpresaInput = {
+    id?: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
+    creadoEn?: Date | string
+  }
+
+  export type InboundChannelRouteUncheckedCreateWithoutEmpresaInput = {
+    id?: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
+    creadoEn?: Date | string
+  }
+
+  export type InboundChannelRouteCreateOrConnectWithoutEmpresaInput = {
+    where: InboundChannelRouteWhereUniqueInput
+    create: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput>
+  }
+
+  export type InboundChannelRouteCreateManyEmpresaInputEnvelope = {
+    data: InboundChannelRouteCreateManyEmpresaInput | InboundChannelRouteCreateManyEmpresaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UsuarioUpsertWithWhereUniqueWithoutEmpresaInput = {
     where: UsuarioWhereUniqueInput
     update: XOR<UsuarioUpdateWithoutEmpresaInput, UsuarioUncheckedUpdateWithoutEmpresaInput>
@@ -4308,6 +5825,94 @@ export namespace Prisma {
     creadoEn?: DateTimeFilter<"Usuario"> | Date | string
   }
 
+  export type InboundChannelRouteUpsertWithWhereUniqueWithoutEmpresaInput = {
+    where: InboundChannelRouteWhereUniqueInput
+    update: XOR<InboundChannelRouteUpdateWithoutEmpresaInput, InboundChannelRouteUncheckedUpdateWithoutEmpresaInput>
+    create: XOR<InboundChannelRouteCreateWithoutEmpresaInput, InboundChannelRouteUncheckedCreateWithoutEmpresaInput>
+  }
+
+  export type InboundChannelRouteUpdateWithWhereUniqueWithoutEmpresaInput = {
+    where: InboundChannelRouteWhereUniqueInput
+    data: XOR<InboundChannelRouteUpdateWithoutEmpresaInput, InboundChannelRouteUncheckedUpdateWithoutEmpresaInput>
+  }
+
+  export type InboundChannelRouteUpdateManyWithWhereWithoutEmpresaInput = {
+    where: InboundChannelRouteScalarWhereInput
+    data: XOR<InboundChannelRouteUpdateManyMutationInput, InboundChannelRouteUncheckedUpdateManyWithoutEmpresaInput>
+  }
+
+  export type InboundChannelRouteScalarWhereInput = {
+    AND?: InboundChannelRouteScalarWhereInput | InboundChannelRouteScalarWhereInput[]
+    OR?: InboundChannelRouteScalarWhereInput[]
+    NOT?: InboundChannelRouteScalarWhereInput | InboundChannelRouteScalarWhereInput[]
+    id?: UuidFilter<"InboundChannelRoute"> | string
+    empresaId?: StringFilter<"InboundChannelRoute"> | string
+    channelId?: UuidFilter<"InboundChannelRoute"> | string
+    tokenHash?: StringFilter<"InboundChannelRoute"> | string
+    isActive?: BoolFilter<"InboundChannelRoute"> | boolean
+    creadoEn?: DateTimeFilter<"InboundChannelRoute"> | Date | string
+  }
+
+  export type EmpresaCreateWithoutInboundRoutesInput = {
+    id?: string
+    nombre: string
+    logoUrl?: string | null
+    modoHostingDB?: $Enums.ModoHostingDB
+    conexionCifrada?: string | null
+    schemaTenant?: string | null
+    creadoEn?: Date | string
+    usuarios?: UsuarioCreateNestedManyWithoutEmpresaInput
+  }
+
+  export type EmpresaUncheckedCreateWithoutInboundRoutesInput = {
+    id?: string
+    nombre: string
+    logoUrl?: string | null
+    modoHostingDB?: $Enums.ModoHostingDB
+    conexionCifrada?: string | null
+    schemaTenant?: string | null
+    creadoEn?: Date | string
+    usuarios?: UsuarioUncheckedCreateNestedManyWithoutEmpresaInput
+  }
+
+  export type EmpresaCreateOrConnectWithoutInboundRoutesInput = {
+    where: EmpresaWhereUniqueInput
+    create: XOR<EmpresaCreateWithoutInboundRoutesInput, EmpresaUncheckedCreateWithoutInboundRoutesInput>
+  }
+
+  export type EmpresaUpsertWithoutInboundRoutesInput = {
+    update: XOR<EmpresaUpdateWithoutInboundRoutesInput, EmpresaUncheckedUpdateWithoutInboundRoutesInput>
+    create: XOR<EmpresaCreateWithoutInboundRoutesInput, EmpresaUncheckedCreateWithoutInboundRoutesInput>
+    where?: EmpresaWhereInput
+  }
+
+  export type EmpresaUpdateToOneWithWhereWithoutInboundRoutesInput = {
+    where?: EmpresaWhereInput
+    data: XOR<EmpresaUpdateWithoutInboundRoutesInput, EmpresaUncheckedUpdateWithoutInboundRoutesInput>
+  }
+
+  export type EmpresaUpdateWithoutInboundRoutesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    modoHostingDB?: EnumModoHostingDBFieldUpdateOperationsInput | $Enums.ModoHostingDB
+    conexionCifrada?: NullableStringFieldUpdateOperationsInput | string | null
+    schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: UsuarioUpdateManyWithoutEmpresaNestedInput
+  }
+
+  export type EmpresaUncheckedUpdateWithoutInboundRoutesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    modoHostingDB?: EnumModoHostingDBFieldUpdateOperationsInput | $Enums.ModoHostingDB
+    conexionCifrada?: NullableStringFieldUpdateOperationsInput | string | null
+    schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    usuarios?: UsuarioUncheckedUpdateManyWithoutEmpresaNestedInput
+  }
+
   export type EmpresaCreateWithoutUsuariosInput = {
     id?: string
     nombre: string
@@ -4316,6 +5921,7 @@ export namespace Prisma {
     conexionCifrada?: string | null
     schemaTenant?: string | null
     creadoEn?: Date | string
+    inboundRoutes?: InboundChannelRouteCreateNestedManyWithoutEmpresaInput
   }
 
   export type EmpresaUncheckedCreateWithoutUsuariosInput = {
@@ -4326,6 +5932,7 @@ export namespace Prisma {
     conexionCifrada?: string | null
     schemaTenant?: string | null
     creadoEn?: Date | string
+    inboundRoutes?: InboundChannelRouteUncheckedCreateNestedManyWithoutEmpresaInput
   }
 
   export type EmpresaCreateOrConnectWithoutUsuariosInput = {
@@ -4352,6 +5959,7 @@ export namespace Prisma {
     conexionCifrada?: NullableStringFieldUpdateOperationsInput | string | null
     schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundRoutes?: InboundChannelRouteUpdateManyWithoutEmpresaNestedInput
   }
 
   export type EmpresaUncheckedUpdateWithoutUsuariosInput = {
@@ -4362,6 +5970,7 @@ export namespace Prisma {
     conexionCifrada?: NullableStringFieldUpdateOperationsInput | string | null
     schemaTenant?: NullableStringFieldUpdateOperationsInput | string | null
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+    inboundRoutes?: InboundChannelRouteUncheckedUpdateManyWithoutEmpresaNestedInput
   }
 
   export type UsuarioCreateManyEmpresaInput = {
@@ -4372,6 +5981,14 @@ export namespace Prisma {
     rol?: $Enums.RolUsuario
     activo?: boolean
     tokenVersion?: number
+    creadoEn?: Date | string
+  }
+
+  export type InboundChannelRouteCreateManyEmpresaInput = {
+    id?: string
+    channelId: string
+    tokenHash: string
+    isActive?: boolean
     creadoEn?: Date | string
   }
 
@@ -4405,6 +6022,30 @@ export namespace Prisma {
     rol?: EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
     activo?: BoolFieldUpdateOperationsInput | boolean
     tokenVersion?: IntFieldUpdateOperationsInput | number
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteUpdateWithoutEmpresaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteUncheckedUpdateWithoutEmpresaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboundChannelRouteUncheckedUpdateManyWithoutEmpresaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channelId?: StringFieldUpdateOperationsInput | string
+    tokenHash?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     creadoEn?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

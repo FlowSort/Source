@@ -103,6 +103,15 @@ exports.Prisma.EmpresaScalarFieldEnum = {
   creadoEn: 'creadoEn'
 };
 
+exports.Prisma.InboundChannelRouteScalarFieldEnum = {
+  id: 'id',
+  empresaId: 'empresaId',
+  channelId: 'channelId',
+  tokenHash: 'tokenHash',
+  isActive: 'isActive',
+  creadoEn: 'creadoEn'
+};
+
 exports.Prisma.UsuarioScalarFieldEnum = {
   id: 'id',
   empresaId: 'empresaId',
@@ -141,6 +150,7 @@ exports.RolUsuario = exports.$Enums.RolUsuario = {
 
 exports.Prisma.ModelName = {
   Empresa: 'Empresa',
+  InboundChannelRoute: 'InboundChannelRoute',
   Usuario: 'Usuario'
 };
 /**
@@ -190,13 +200,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/control\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"CONTROL_DATABASE_URL\")\n}\n\nmodel Empresa {\n  id              String        @id @default(uuid())\n  nombre          String\n  logoUrl         String?\n  modoHostingDB   ModoHostingDB @default(GOOGLE_CLOUD)\n  conexionCifrada String?\n  schemaTenant    String?       @unique\n  creadoEn        DateTime      @default(now())\n  usuarios        Usuario[]\n}\n\nmodel Usuario {\n  id           String     @id @default(uuid())\n  empresaId    String\n  empresa      Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)\n  nombre       String\n  email        String     @unique\n  passwordHash String\n  rol          RolUsuario @default(EMPLEADO)\n  activo       Boolean    @default(true)\n  tokenVersion Int        @default(0)\n  creadoEn     DateTime   @default(now())\n\n  @@index([empresaId, activo])\n}\n\nenum ModoHostingDB {\n  AUTOALOJADO\n  GOOGLE_CLOUD\n}\n\nenum RolUsuario {\n  ADMIN_EMPRESA\n  EMPLEADO\n}\n",
-  "inlineSchemaHash": "2ac18dd8bfee1b7010ee3d58918fd5165cc7b1b85814b7554f83cf996ce80d5b",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated/control\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"CONTROL_DATABASE_URL\")\n}\n\nmodel Empresa {\n  id              String                @id @default(uuid())\n  nombre          String\n  logoUrl         String?\n  modoHostingDB   ModoHostingDB         @default(GOOGLE_CLOUD)\n  conexionCifrada String?\n  schemaTenant    String?               @unique\n  creadoEn        DateTime              @default(now())\n  usuarios        Usuario[]\n  inboundRoutes   InboundChannelRoute[]\n}\n\nmodel InboundChannelRoute {\n  id        String   @id @default(uuid()) @db.Uuid\n  empresaId String   @map(\"empresa_id\")\n  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)\n  channelId String   @map(\"channel_id\") @db.Uuid\n  tokenHash String   @unique @map(\"token_hash\")\n  isActive  Boolean  @default(true) @map(\"is_active\")\n  creadoEn  DateTime @default(now()) @map(\"created_at\")\n\n  @@unique([empresaId, channelId])\n  @@index([empresaId, isActive])\n  @@map(\"inbound_channel_routes\")\n}\n\nmodel Usuario {\n  id           String     @id @default(uuid())\n  empresaId    String\n  empresa      Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)\n  nombre       String\n  email        String     @unique\n  passwordHash String\n  rol          RolUsuario @default(EMPLEADO)\n  activo       Boolean    @default(true)\n  tokenVersion Int        @default(0)\n  creadoEn     DateTime   @default(now())\n\n  @@index([empresaId, activo])\n}\n\nenum ModoHostingDB {\n  AUTOALOJADO\n  GOOGLE_CLOUD\n}\n\nenum RolUsuario {\n  ADMIN_EMPRESA\n  EMPLEADO\n}\n",
+  "inlineSchemaHash": "4dea44b58b16262d78ac0b272d3bfa3f969771082abea43cac882a6b11ba5ae0",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Empresa\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"logoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"modoHostingDB\",\"kind\":\"enum\",\"type\":\"ModoHostingDB\"},{\"name\":\"conexionCifrada\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schemaTenant\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"usuarios\",\"kind\":\"object\",\"type\":\"Usuario\",\"relationName\":\"EmpresaToUsuario\"}],\"dbName\":null},\"Usuario\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"empresaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"empresa\",\"kind\":\"object\",\"type\":\"Empresa\",\"relationName\":\"EmpresaToUsuario\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rol\",\"kind\":\"enum\",\"type\":\"RolUsuario\"},{\"name\":\"activo\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"tokenVersion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Empresa\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"logoUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"modoHostingDB\",\"kind\":\"enum\",\"type\":\"ModoHostingDB\"},{\"name\":\"conexionCifrada\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"schemaTenant\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"usuarios\",\"kind\":\"object\",\"type\":\"Usuario\",\"relationName\":\"EmpresaToUsuario\"},{\"name\":\"inboundRoutes\",\"kind\":\"object\",\"type\":\"InboundChannelRoute\",\"relationName\":\"EmpresaToInboundChannelRoute\"}],\"dbName\":null},\"InboundChannelRoute\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"empresaId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"empresa_id\"},{\"name\":\"empresa\",\"kind\":\"object\",\"type\":\"Empresa\",\"relationName\":\"EmpresaToInboundChannelRoute\"},{\"name\":\"channelId\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"channel_id\"},{\"name\":\"tokenHash\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"token_hash\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_active\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"}],\"dbName\":\"inbound_channel_routes\"},\"Usuario\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"empresaId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"empresa\",\"kind\":\"object\",\"type\":\"Empresa\",\"relationName\":\"EmpresaToUsuario\"},{\"name\":\"nombre\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rol\",\"kind\":\"enum\",\"type\":\"RolUsuario\"},{\"name\":\"activo\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"tokenVersion\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"creadoEn\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

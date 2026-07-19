@@ -55,6 +55,7 @@ Para Android, consultar `apps/mobile/README.md`. Emulador Android debe apuntar a
 | `JWT_REFRESH_SECRET` | Firma refresh tokens. Mínimo 24 caracteres. |
 | `ENCRYPTION_MASTER_KEY_BASE64` | Clave libsodium de 32 bytes para cifrado envelope. |
 | `PORT` | Puerto API. Default `4000`. |
+| `PUBLIC_API_URL` | Origen HTTPS usado al generar URLs públicas. |
 | `NODE_ENV` | `development`, `test` o `production`. |
 
 Generar secretos locales:
@@ -86,6 +87,8 @@ Para probar dos empresas, crear ambas y registros equivalentes. Cada CEO debe ve
 - Rutas administrativas exigen `ADMIN_EMPRESA`.
 - Revocar incrementa `tokenVersion`, desactiva usuario y bloquea refresh/login.
 - Nunca loguear URLs de conexión, JWT, contraseñas o sobres cifrados.
+
+Diseño y uso de canales universales: [docs/inbound-channels.md](docs/inbound-channels.md).
 
 ## Calidad
 

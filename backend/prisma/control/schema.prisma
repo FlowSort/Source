@@ -7,29 +7,48 @@ datasource db {
   provider = "postgresql"
   url      = env("CONTROL_DATABASE_URL")
 }
+
 model Empresa {
-  id String @id @default(uuid())
-  nombre String
-  logoUrl String?
-  modoHostingDB ModoHostingDB @default(GOOGLE_CLOUD)
+  id              String                @id @default(uuid())
+  nombre          String
+  logoUrl         String?
+  modoHostingDB   ModoHostingDB         @default(GOOGLE_CLOUD)
   conexionCifrada String?
-  schemaTenant String? @unique
-  creadoEn DateTime @default(now())
-  usuarios Usuario[]
+  schemaTenant    String?               @unique
+  creadoEn        DateTime              @default(now())
+  usuarios        Usuario[]
+  inboundRoutes   InboundChannelRoute[]
 }
+
+model InboundChannelRoute {
+  id        String   @id @default(uuid()) @db.Uuid
+  empresaId String   @map("empresa_id")
+  empresa   Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  channelId String   @map("channel_id") @db.Uuid
+  tokenHash String   @unique @map("token_hash")
+  isActive  Boolean  @default(true) @map("is_active")
+  creadoEn  DateTime @default(now()) @map("created_at")
+
+  @@unique([empresaId, channelId])
+  @@index([empresaId, isActive])
+  @@map("inbound_channel_routes")
+}
+
 model Usuario {
-  id String @id @default(uuid())
-  empresaId String
-  empresa Empresa @relation(fields:[empresaId],references:[id],onDelete:Cascade)
-  nombre String
-  email String @unique
+  id           String     @id @default(uuid())
+  empresaId    String
+  empresa      Empresa    @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  nombre       String
+  email        String     @unique
   passwordHash String
-  rol RolUsuario @default(EMPLEADO)
-  activo Boolean @default(true)
-  tokenVersion Int @default(0)
-  creadoEn DateTime @default(now())
-  @@index([empresaId,activo])
+  rol          RolUsuario @default(EMPLEADO)
+  activo       Boolean    @default(true)
+  tokenVersion Int        @default(0)
+  creadoEn     DateTime   @default(now())
+
+  @@index([empresaId, activo])
 }
+
 enum ModoHostingDB {
   AUTOALOJADO
   GOOGLE_CLOUD

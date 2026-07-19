@@ -16,4 +16,6 @@ describe("API",()=>{
   it("expone health",async()=>{const r=await request(app).get("/health");expect(r.status).toBe(200);expect(r.body).toEqual({ok:true,producto:"FlowSort"});});
   it("rechaza endpoint tenant sin token",async()=>{const r=await request(app).get("/api/registros");expect(r.status).toBe(401);});
   it("bloquea administración al empleado",async()=>{const token=jwt.sign({sub:crypto.randomUUID(),empresaId:crypto.randomUUID(),rol:"EMPLEADO",version:0,tipo:"access"},process.env.JWT_ACCESS_SECRET!,{expiresIn:"15m"});const r=await request(app).get("/api/empleados").set("Authorization",`Bearer ${token}`);expect(r.status).toBe(403);});
+  it("protege generación de canales",async()=>{const r=await request(app).post("/api/v1/channels/generate").send({});expect(r.status).toBe(401);});
+  it("oculta tokens públicos inválidos",async()=>{const r=await request(app).post("/api/v1/inbound/submit/invalido").send({});expect(r.status).toBe(404);expect(r.body).toEqual({error:"Canal no disponible"});});
 });
