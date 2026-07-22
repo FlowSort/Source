@@ -17,6 +17,7 @@ import "./sidebar.css";
 import "./refined.css";
 import "./monochrome.css";
 import "./reduced-motion.css";
+import "./soft-gradients.css";
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 type Vista =
   "inicio" | "registros" | "empleados" | "monitoreo" | "configuracion";
