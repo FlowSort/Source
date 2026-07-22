@@ -11,6 +11,7 @@ import "./decorations.css";
 import "./palette.css";
 import "./motion.css";
 import "./backgrounds.css";
+import "./buttons.css";
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 type Vista =
   "inicio" | "registros" | "empleados" | "monitoreo" | "configuracion";
