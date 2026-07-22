@@ -13,6 +13,7 @@ import "./motion.css";
 import "./backgrounds.css";
 import "./buttons.css";
 import "./layout.css";
+import "./sidebar.css";
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:4000/api";
 type Vista =
   "inicio" | "registros" | "empleados" | "monitoreo" | "configuracion";
@@ -27,6 +28,7 @@ function readSession(): Sesion | null {
 }
 export default function App() {
   const [sesion, setSesion] = useState<Sesion | null>(readSession);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [vista, setVista] = useState<Vista>("inicio");
   const api = useMemo(() => new ApiClient(API, () => setSesion(null)), []);
   useEffect(() => {
@@ -44,8 +46,9 @@ export default function App() {
   if (!sesion) return <Auth api={api} onAuth={setSesion} />;
   const admin = sesion.usuario.rol === "ADMIN_EMPRESA";
   return (
-    <div className="shell">
+    <div className={`shell ${sidebarOpen ? "sidebar-open" : "sidebar-collapsed"}`}>
       <aside>
+        <button className="sidebar-toggle" aria-label="Contraer menú" onClick={() => setSidebarOpen((v) => !v)}>{sidebarOpen ? "‹" : "›"}</button>
         <div className="brand">
           {sesion.empresa.logoUrl ? (
             <img src={sesion.empresa.logoUrl} />
