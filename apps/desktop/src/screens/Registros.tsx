@@ -81,6 +81,7 @@ export function Registros({
   }
   const actual = plantillas.find((p) => p.id === plantillaId);
   const visibles = items.filter((r) => (filtroPrioridad === "TODAS" || r.prioridad === filtroPrioridad) && (filtroEstado === "TODOS" || r.estado === filtroEstado));
+  const slaVencidos = items.filter((r) => r.prioridad === "SUPER_ALTA" && r.estado === "PENDIENTE" && Date.now() - new Date(r.fechaRegistro).getTime() > 4 * 60 * 60 * 1000).length;
   return (
     <>
       <header>
@@ -107,6 +108,7 @@ export function Registros({
         </div>
       </header>
       <StatsStrip items={items} />
+      {slaVencidos > 0 && <div className="notice error-state">SLA vencido: {slaVencidos} urgente(s) llevan más de 4 horas pendientes.</div>}
       {error && (
         <div className="notice error-state">
           {error}
