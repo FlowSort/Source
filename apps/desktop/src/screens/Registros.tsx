@@ -23,6 +23,8 @@ export function Registros({
     [base, setBase] = useState<Record<string, string>>({});
   const [campos, setCampos] = useState<Record<string, unknown>>({}),
     [buscar, setBuscar] = useState("");
+  const [filtroPrioridad, setFiltroPrioridad] = useState("TODAS");
+  const [filtroEstado, setFiltroEstado] = useState("TODOS");
   const [plantillaId, setPlantillaId] = useState("");
   async function cargar() {
     setCargando(true);
@@ -78,6 +80,7 @@ export function Registros({
     await window.flowSort.saveFile("flowsort-registros.xlsx", data);
   }
   const actual = plantillas.find((p) => p.id === plantillaId);
+  const visibles = items.filter((r) => (filtroPrioridad === "TODAS" || r.prioridad === filtroPrioridad) && (filtroEstado === "TODOS" || r.estado === filtroEstado));
   return (
     <>
       <header>
@@ -136,7 +139,7 @@ export function Registros({
                   <strong>{col.replace("_", " ")}</strong>
                   <span>{items.filter((r) => r.estado === col).length}</span>
                 </header>
-                {items
+                {visibles
                   .filter((r) => r.estado === col)
                   .map((r) => (
                     <article
